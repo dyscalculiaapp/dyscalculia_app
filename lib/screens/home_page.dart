@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 import 'package:dyscalculia_app/number_array/screens/set_total_problem_page.dart';
 import 'package:dyscalculia_app/number_ruler_scales/screens/set_total_problem_page.dart';
+import 'package:dyscalculia_app/missing_number/screens/set_total_problem_page.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -138,7 +139,11 @@ class MainScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontFamily: 'text', fontSize: 40.0),
                     ),
                     onPressed: () {
-
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return SetTotalProblems_missing();
+                          })
+                      );
                     },
                   ),
                 ),],
