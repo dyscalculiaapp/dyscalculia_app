@@ -382,41 +382,43 @@ class _RunQuizState extends State<RunQuiz> {
           flex: 3,
           child: SizedBox(),
         ),
-        Expanded(
-          flex: 10,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0), // 전체 그리드에 적용될 패딩
           child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
-            itemCount: 10,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 5, // 한 줄에 5개의 그리드
+              childAspectRatio: 1, // 그리드의 종횡비 1:1
+            ),
+            itemCount: 10, // 총 10개 아이템
             itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  if (quizMain.index() == index + 1) {
-                    // 필요한 경우 추가 로직을 여기에 넣을 수 있습니다.
-                  }
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white),
-                  ),
-                  child: (quizMain.index() == index) ?
-                  (quizMain.numbers()[index] == -1 ?
-                  Text('X', style: TextStyle(color: Colors.red, fontSize: 24)) :
-                  TextField(
-                    controller: _myController,  // NumPadNormal의 컨트롤러와 연결
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: '?',
-                      hintStyle: TextStyle(fontSize: 24, color: Colors.grey),
-                    ),
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.number,
-                    style: TextStyle(fontSize: 24, color: Colors.black),
-                  )) :
-                  Text(quizMain.numbers()[index].toString(), style: TextStyle(fontSize: 24)),
+              bool isSpecial = quizMain.index() == index; // 특별 처리가 필요한 조건
+              return Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: isSpecial ? Colors.green : Colors.white, // 조건에 따른 배경색 변경
+                  border: Border.all(color: Colors.green, width: 3.0), // 테두리
                 ),
+                child: isSpecial ?
+                TextField(
+                  controller: _myController,
+                  readOnly: true,
+                  textAlign: TextAlign.center,
+                  showCursor: false,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.green,
+                    border: InputBorder.none,
+                    hintText: '?',
+                    hintStyle: TextStyle(fontFamily: 'text', fontSize: 30, color: Colors.white),
+                  ),
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(fontFamily: 'text', fontSize: 30, color: Colors.white),
+                ) :
+                Text(quizMain.numbers()[index].toString(), style: TextStyle(fontFamily: 'text', fontSize: 30)),
               );
             },
+            shrinkWrap: true, // 그리드 뷰가 차지하는 공간을 내용물에 맞춤
+            physics: NeverScrollableScrollPhysics(), // 스크롤 불가능 // 스크롤 불가능
           ),
         ),
         Expanded(

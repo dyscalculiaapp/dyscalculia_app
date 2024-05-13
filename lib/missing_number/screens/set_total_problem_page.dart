@@ -122,6 +122,9 @@ class _SetTotalProblemsState extends State<SetTotalProblems_missing> {
                         if (totalProblems == 0) {
                           totalProblems = 10;
                         }
+                        if (totalProblems > 50) {
+                          totalProblems = 50;
+                        }
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (_) => QuizScreen(totalProblems: totalProblems)),
