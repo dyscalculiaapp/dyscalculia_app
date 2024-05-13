@@ -39,7 +39,7 @@ class MainScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return SetTotalProblems();
+                      return SetTotalProblems_missing();
                     }));
                   },
                 ),
