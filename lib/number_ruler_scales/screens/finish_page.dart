@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 import 'package:dyscalculia_app/screens/home_page.dart';
 
 class FinishScreen extends StatefulWidget {
@@ -34,9 +35,11 @@ class _FinishScreenState extends State<FinishScreen> {
 
   Future<void> loadAndUpdateCorrectProblemRulerCount() async {
     final prefs = await SharedPreferences.getInstance();
-    correctProblemRulerCount = prefs.getInt('correctProblemRulerCount') ?? 0;
+    String todayKey = 'correctProblemRulerCount_${DateFormat('yyyy-MM-dd').format(DateTime.now())}'; // 현재 날짜를 yyyy-MM-dd 형식으로 변환
+    correctProblemRulerCount = prefs.getInt('correctProblemRulerCount_${DateFormat('yyyy-MM-dd').format(DateTime.now())}') ?? 0;
     correctProblemRulerCount += widget.correctProblem;
-    await prefs.setInt('correctProblemRulerCount', correctProblemRulerCount);
+
+    await prefs.setInt(todayKey, correctProblemRulerCount);
   }
 
   @override

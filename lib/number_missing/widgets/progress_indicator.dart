@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dyscalculia_app/missing_number/widgets/borderd_text.dart';
+import 'package:dyscalculia_app/number_missing/widgets/borderd_text.dart';
 
 class MyProgressIndicator extends StatelessWidget {
   final int totalProblem;

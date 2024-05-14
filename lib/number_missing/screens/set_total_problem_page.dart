@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:dyscalculia_app/missing_number/screens/quiz_page.dart';
-import 'package:dyscalculia_app/missing_number/widgets/num_pad_normal.dart';
+import 'package:dyscalculia_app/number_missing/screens/quiz_page.dart';
+import 'package:dyscalculia_app/number_missing/widgets/num_pad_normal.dart';
 import 'package:flutter/services.dart';
 
 void main() {

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
+
 import 'package:dyscalculia_app/screens/home_page.dart';
 
 class FinishScreen extends StatefulWidget {
@@ -34,10 +37,11 @@ class _FinishScreenState extends State<FinishScreen> {
 
   Future<void> loadAndUpdateCorrectProblemMissingCount() async {
     final prefs = await SharedPreferences.getInstance();
-    correctProblemMissingCount = prefs.getInt('correctProblemMissingCount') ?? 0;
+    String todayKey = 'correctProblemMissingCount_${DateFormat('yyyy-MM-dd').format(DateTime.now())}'; // 현재 날짜를 yyyy-MM-dd 형식으로 변환
+    correctProblemMissingCount = prefs.getInt('correctProblemMissingCount_${DateFormat('yyyy-MM-dd').format(DateTime.now())}') ?? 0;
     correctProblemMissingCount += widget.correctProblem;
 
-    await prefs.setInt('correctProblemMissingCount', correctProblemMissingCount);
+    await prefs.setInt(todayKey, correctProblemMissingCount);
   }
 
   @override

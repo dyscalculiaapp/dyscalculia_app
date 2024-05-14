@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:dyscalculia_app/missing_number/widgets/progress_indicator.dart';
-import 'package:dyscalculia_app/missing_number/widgets/chance_indicator.dart';
-import 'package:dyscalculia_app/missing_number/widgets/num_pad_normal.dart';
-import 'package:dyscalculia_app/missing_number/widgets/answer_dialog.dart';
-import 'package:dyscalculia_app/missing_number/logic/quiz_maker.dart';
-import 'package:dyscalculia_app/missing_number/screens/finish_page.dart';
+import 'package:dyscalculia_app/number_missing/widgets/progress_indicator.dart';
+import 'package:dyscalculia_app/number_missing/widgets/chance_indicator.dart';
+import 'package:dyscalculia_app/number_missing/widgets/num_pad_normal.dart';
+import 'package:dyscalculia_app/number_missing/widgets/answer_dialog.dart';
+import 'package:dyscalculia_app/number_missing/logic/quiz_maker.dart';
+import 'package:dyscalculia_app/number_missing/screens/finish_page.dart';
 
 QuizMain quizMain = QuizMain();
 
