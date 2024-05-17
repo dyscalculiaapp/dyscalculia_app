@@ -35,11 +35,13 @@ class _FinishScreenState extends State<FinishScreen> {
 
   Future<void> loadAndUpdateCorrectProblemArrayCount() async {
     final prefs = await SharedPreferences.getInstance();
-    String todayKey = 'correctProblemArrayCount_${DateFormat('yyyy-MM-dd').format(DateTime.now())}'; // 현재 날짜를 yyyy-MM-dd 형식으로 변환
-    correctProblemArrayCount = prefs.getInt('correctProblemArrayCount_${DateFormat('yyyy-MM-dd').format(DateTime.now())}') ?? 0;
+    DateTime now = DateTime.now().toLocal();
+    String todayKey = 'correctProblemArrayCount_${DateFormat('yyyy-MM-dd').format(now)}'; // 현재 날짜를 yyyy-MM-dd 형식으로 변환
+    correctProblemArrayCount = prefs.getInt(todayKey) ?? 0;
     correctProblemArrayCount += widget.correctProblem;
 
     await prefs.setInt(todayKey, correctProblemArrayCount);
+    print("Data saved for $todayKey: $correctProblemArrayCount");
   }
 
   @override

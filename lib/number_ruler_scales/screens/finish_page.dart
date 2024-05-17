@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+
 import 'package:dyscalculia_app/screens/home_page.dart';
 
 class FinishScreen extends StatefulWidget {
@@ -35,11 +36,13 @@ class _FinishScreenState extends State<FinishScreen> {
 
   Future<void> loadAndUpdateCorrectProblemRulerCount() async {
     final prefs = await SharedPreferences.getInstance();
-    String todayKey = 'correctProblemRulerCount_${DateFormat('yyyy-MM-dd').format(DateTime.now())}'; // 현재 날짜를 yyyy-MM-dd 형식으로 변환
-    correctProblemRulerCount = prefs.getInt('correctProblemRulerCount_${DateFormat('yyyy-MM-dd').format(DateTime.now())}') ?? 0;
+    DateTime now = DateTime.now().toLocal(); // 로컬 시간 사용
+    String todayKey = 'correctProblemRulerCount_${DateFormat('yyyy-MM-dd').format(now)}'; // 현재 날짜를 yyyy-MM-dd 형식으로 변환
+    correctProblemRulerCount = prefs.getInt(todayKey) ?? 0;
     correctProblemRulerCount += widget.correctProblem;
 
     await prefs.setInt(todayKey, correctProblemRulerCount);
+    print("Data saved for $todayKey: $correctProblemRulerCount"); // 디버깅용 출력
   }
 
   @override
@@ -47,20 +50,21 @@ class _FinishScreenState extends State<FinishScreen> {
     double percentageScore = widget.score;
     int roundedPercentageScore = percentageScore.round();
 
-    if (roundedPercentageScore < 0){
+    if (roundedPercentageScore < 0) {
       roundedPercentageScore = 0;
     }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,  // 디버그 배너 제거
       home: Scaffold(
-          backgroundColor: Colors.white,
-          body: Column(children: <Widget>[
+        backgroundColor: Colors.white,
+        body: Column(
+          children: <Widget>[
             Expanded(
               flex: 5,
               child: SizedBox(),
             ),
-            Column (children:[
+            Column(children: [
               Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Center(
@@ -111,8 +115,8 @@ class _FinishScreenState extends State<FinishScreen> {
               child: SizedBox(),
             ),
             TextButton(
-              style : TextButton.styleFrom(
-                backgroundColor : Colors.green,
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.green,
                 padding: EdgeInsets.all(20.0),
               ),
               child: Text(
@@ -120,17 +124,16 @@ class _FinishScreenState extends State<FinishScreen> {
                 style: TextStyle(color: Colors.white, fontFamily: 'text', fontSize: 40.0),
               ),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) {
-                      return MainScreen();
-                    }));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
               },
             ),
             Expanded(
               flex: 5,
               child: SizedBox(),
-            )
-          ])),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
