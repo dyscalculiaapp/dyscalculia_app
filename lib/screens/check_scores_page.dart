@@ -50,6 +50,7 @@ class CheckScores extends StatelessWidget {
                   },
                 ),
               ),
+              Divider(height: 0, color: Colors.grey, thickness: 2.0,),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Row(

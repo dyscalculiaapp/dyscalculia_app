@@ -4,6 +4,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dyscalculia_app/screens/home_page.dart';
 import 'package:dyscalculia_app/screens/check_scores_page.dart';
+import 'package:dyscalculia_app/widgets/progress_indicator.dart';
 
 class TableCalendarScreen extends StatefulWidget {
   const TableCalendarScreen({Key? key}) : super(key: key);
@@ -48,21 +49,194 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
 
       if (dailyMarkers.isNotEmpty) {
         newMarkers[_stripTime(day)] = dailyMarkers;
-        print("Markers for $dateString: $dailyMarkers");  // 디버깅용 출력
       }
     }
 
     setState(() {
       _eventMarkers = newMarkers;
-      print("Event Markers Loaded: $_eventMarkers");  // 디버깅용 출력
     });
   }
 
   List<String> _getEventsForDay(DateTime day) {
     DateTime strippedDay = _stripTime(day);
     List<String> events = _eventMarkers[strippedDay] ?? [];
-    print("Events for $strippedDay: $events");  // 디버깅용 출력
     return events;
+  }
+
+  Color _getTextColor(DateTime day) {
+    if (day.weekday == DateTime.saturday) {
+      return Colors.blue;
+    } else if (day.weekday == DateTime.sunday) {
+      return Colors.red;
+    } else {
+      return Colors.black;
+    }
+  }
+
+  Color _getTextColorOut(DateTime day) {
+    if (day.weekday == DateTime.saturday) {
+      return Colors.blue.shade200;
+    } else if (day.weekday == DateTime.sunday) {
+      return Colors.red.shade200;
+    } else {
+      return Colors.grey;
+    }
+  }
+
+  Color _getDowTextColor(String weekday) {
+    if (weekday == '토') {
+      return Colors.blue;
+    } else if (weekday == '일') {
+      return Colors.red;
+    } else {
+      return Colors.black;
+    }
+  }
+
+  Future<void> _showDayDetailsDialog(DateTime day) async {
+    String dateString = DateFormat('yyyy-MM-dd').format(day);
+    int arrayCount = await _loadScore('correctProblemArrayCount', dateString);
+    int rulerCount = await _loadScore('correctProblemRulerCount', dateString);
+    int missingCount = await _loadScore('correctProblemMissingCount', dateString);
+
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: 'Dismiss',
+      barrierColor: Colors.white60, // 다이얼로그 외부 틴트 컬러
+      transitionDuration: Duration(milliseconds: 0),
+      pageBuilder: (context, anim1, anim2) {
+        return Container();
+      },
+      transitionBuilder: (context, anim1, anim2, child) {
+        return Transform.scale(
+          scale: anim1.value,
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              Future<void> _updateDayDetails(DateTime newDay) async {
+                setState(() {
+                  day = newDay;
+                });
+                dateString = DateFormat('yyyy-MM-dd').format(newDay);
+                arrayCount = await _loadScore('correctProblemArrayCount', dateString);
+                rulerCount = await _loadScore('correctProblemRulerCount', dateString);
+                missingCount = await _loadScore('correctProblemMissingCount', dateString);
+              }
+
+              return GestureDetector(
+                onHorizontalDragEnd: (details) {
+                  if (details.primaryVelocity! > 0) {
+                    // 스와이프 오른쪽 -> 이전 날짜
+                    _updateDayDetails(day.subtract(Duration(days: 1)));
+                  } else if (details.primaryVelocity! < 0) {
+                    // 스와이프 왼쪽 -> 다음 날짜
+                    _updateDayDetails(day.add(Duration(days: 1)));
+                  }
+                },
+                child: Dialog(
+                  backgroundColor: Colors.white,
+                  surfaceTintColor: Colors.transparent,
+                  elevation: 10.0,
+                  shadowColor: Colors.green,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(60.0),
+                    side: BorderSide(color: Colors.green, width: 2.0), // 다이얼로그 테두리 색
+                  ),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(30.0), // 다이얼로그 패딩 추가
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Text(
+                              '$dateString',
+                              style: TextStyle(
+                                fontFamily: 'text',
+                                fontSize: 30.0,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ),
+                          Divider(height: 0, color: Colors.green, thickness: 2.0,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 50.0),
+                            child: Column(
+                              children: [
+                                _generateProgressIndicator(context, '수 위치 찾기', arrayCount, Colors.green),
+                                _generateProgressIndicator(context, '눈금 수 찾기', rulerCount, Colors.red),
+                                _generateProgressIndicator(context, '사라진 수 찾기', missingCount, Colors.blue),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.arrow_left_outlined,
+                                    color: Colors.green,
+                                    size: 80,
+                                  ),
+                                  onPressed: () => _updateDayDetails(day.subtract(Duration(days: 1))),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: Text(
+                                    'Close',
+                                    style: TextStyle(
+                                      fontFamily: 'text',
+                                      fontSize: 30.0,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.arrow_right_outlined,
+                                    color: Colors.green,
+                                    size: 80,
+                                  ),
+                                  onPressed: () => _updateDayDetails(day.add(Duration(days: 1))),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Future<int> _loadScore(String key, String date) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('${key}_$date') ?? 0;
+  }
+
+  Widget _generateProgressIndicator(BuildContext context, String label, int correctProblem, Color color) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: MyProgressIndicator(
+        label: label,
+        totalProblem: 20,
+        correctProblem: correctProblem,
+        minHeight: 60.0,
+        color: color,
+        backgroundColor: Colors.grey.shade300,
+      ),
+    );
   }
 
   @override
@@ -88,15 +262,163 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                     setState(() {
                       _selectedDay = selectedDay;
                       _focusedDay = focusedDay;
+                      _showDayDetailsDialog(selectedDay);  // 날짜 선택 시 다이얼로그 표시
                     });
                   },
                   eventLoader: _getEventsForDay,
+                  daysOfWeekHeight: 40,
+                  rowHeight: 150.0,
+                  headerStyle: HeaderStyle(
+                    titleCentered: true,
+                    titleTextFormatter: (date, locale) => DateFormat.yMMMM(locale).format(date),
+                    formatButtonVisible: false,
+                    titleTextStyle: TextStyle(
+                      fontFamily: 'text',
+                      fontSize: 30.0,
+                      color: Colors.green,
+                    ),
+                    headerPadding: EdgeInsets.symmetric(vertical: 10.0),
+                    leftChevronIcon: Icon(Icons.arrow_left, size: 40.0),
+                    rightChevronIcon: Icon(Icons.arrow_right, size: 40.0),
+                  ),
+                  daysOfWeekStyle: DaysOfWeekStyle(
+                    weekdayStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20.0,
+                    ),
+                    weekendStyle: TextStyle(
+                      color: Colors.red,
+                      fontSize: 20.0,
+                    ),
+                    dowTextFormatter: (date, locale) {
+                      String weekday = DateFormat.E(locale).format(date);
+                      return weekday;
+                    },
+                  ),
+                  calendarStyle: CalendarStyle(
+                    defaultTextStyle: TextStyle(
+                      color: Colors.black,
+                    ),
+                    weekendTextStyle: TextStyle(
+                      color: Colors.red,
+                    ),
+                    outsideTextStyle: TextStyle(
+                      color: Colors.grey,
+                    ),
+                    selectedDecoration: BoxDecoration(
+                      color: Colors.transparent,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.green, width: 2.0), // 테두리만 있는 원
+                    ),
+                    todayDecoration: BoxDecoration(
+                      color: Colors.green,
+                      shape: BoxShape.circle,
+                    ),
+                    tableBorder: const TableBorder(
+                      top: BorderSide(
+                          color: Colors.grey
+                      ),
+                      bottom: BorderSide(
+                          color: Colors.grey
+                      ),
+                      // calendar 의 내부 가로선
+                      horizontalInside: BorderSide(
+                          color: Colors.grey
+                      ),
+                      borderRadius: BorderRadius.zero,
+                    ),
+                  ),
                   calendarBuilders: CalendarBuilders(
+                    defaultBuilder: (context, day, focusedDay) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15.0),
+                            child: Text(
+                              '${day.day}',  // 숫자만 표시
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: _getTextColor(day),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    outsideBuilder: (context, day, focusedDay) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15.0),
+                            child: Text(
+                              '${day.day}',  // 숫자만 표시
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: _getTextColorOut(day),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    selectedBuilder: (context, day, focusedDay) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                shape: BoxShape.circle,
+                                border: Border.all(color: Colors.green, width: 2.0), // 테두리만 있는 원
+                              ),
+                              width: 40,
+                              height: 40,
+                              child: Center(
+                                child: Text(
+                                  '${day.day}',  // 숫자만 표시
+                                  style: TextStyle(
+                                    color: _getTextColor(day),
+                                    fontSize: 20.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    todayBuilder: (context, day, focusedDay) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                shape: BoxShape.circle,
+                              ),
+                              width: 40,
+                              height: 40,
+                              child: Center(
+                                child: Text(
+                                  '${day.day}',  // 숫자만 표시
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                     markerBuilder: (context, day, events) {
                       if (events.isNotEmpty) {
                         return Positioned(
-                          bottom: 1,
-                          child: Row(
+                          bottom: 10,
+                          child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: events.map((event) {
                               Color markerColor;
@@ -114,11 +436,11 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                                   markerColor = Colors.transparent;
                               }
                               return Container(
-                                width: 10.0,
+                                width: 40.0,
                                 height: 10.0,
-                                margin: EdgeInsets.symmetric(horizontal: 1.5),
+                                margin: EdgeInsets.symmetric(vertical: 2.0),
                                 decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
+                                  borderRadius: BorderRadius.circular(5.0),
                                   color: markerColor,
                                 ),
                               );
@@ -128,36 +450,24 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                       }
                       return null;
                     },
-                  ),
-                  daysOfWeekHeight: 60,
-                  rowHeight: 120.0,
-                  headerStyle: HeaderStyle(
-                    titleCentered: true,
-                    titleTextFormatter: (date, locale) => DateFormat.yMMMMd(locale).format(date),
-                    formatButtonVisible: false,
-                    titleTextStyle: TextStyle(
-                      fontFamily: 'text',
-                      fontSize: 30.0,
-                      color: Colors.blue,
-                    ),
-                    headerPadding: EdgeInsets.symmetric(vertical: 10.0),
-                    leftChevronIcon: Icon(Icons.arrow_left, size: 60.0),
-                    rightChevronIcon: Icon(Icons.arrow_right, size: 60.0),
-                  ),
-                  calendarStyle: CalendarStyle(
-                    selectedDecoration: BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
-                    ),
-                    todayDecoration: BoxDecoration(
-                      color: Colors.blue,
-                      shape: BoxShape.circle,
-                    ),
+                    dowBuilder: (context, day) {
+                      final text = DateFormat.E('ko_KR').format(day);
+                      return Center(
+                        child: Text(
+                          text,
+                          style: TextStyle(
+                            color: _getDowTextColor(text),
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
+              Divider(height: 0, color: Colors.grey, thickness: 2.0,),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -166,7 +476,7 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                       onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen())),
                     ),
                     IconButton(
-                      icon: Icon(Icons.view_headline, size: 40),
+                      icon: Icon(Icons.view_headline, size: 45),
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => CheckScores()));
                       },

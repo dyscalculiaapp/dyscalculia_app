@@ -59,10 +59,10 @@ class MyProgressIndicator extends StatelessWidget {
                   text: '$correctProblem',
                   textStyle: TextStyle(
                     fontFamily: 'text',
-                    color: color,
+                    color: Colors.white,
                     fontSize: 25.0,
                   ),
-                  borderColor: backgroundColor,
+                  borderColor: color,
                   strokeWidth: 5.0,
                 ),
               ),
