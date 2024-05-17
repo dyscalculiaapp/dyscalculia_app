@@ -102,13 +102,13 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                               Color markerColor;
                               switch (event) {
                                 case 'array':
-                                  markerColor = Colors.red;
+                                  markerColor = Colors.green;
                                   break;
                                 case 'ruler':
-                                  markerColor = Colors.blue;
+                                  markerColor = Colors.red;
                                   break;
                                 case 'missing':
-                                  markerColor = Colors.green;
+                                  markerColor = Colors.blue;
                                   break;
                                 default:
                                   markerColor = Colors.transparent;
