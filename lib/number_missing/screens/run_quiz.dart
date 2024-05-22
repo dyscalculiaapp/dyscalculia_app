@@ -311,7 +311,7 @@ class _RunQuizState extends State<RunQuiz> {
                   child: Text(
                       '발음듣기',
                       style: TextStyle(
-                        fontFamily: 'text',
+                        fontFamily: 'static',
                         color: Colors.transparent,
                         fontSize: 30.0,
                       )
@@ -370,7 +370,7 @@ class _RunQuizState extends State<RunQuiz> {
                   child: Text(
                       '종료하기',
                       style: TextStyle(
-                        fontFamily: 'text',
+                        fontFamily: 'static',
                         color: Colors.green,
                         fontSize: 30.0,
                       )
@@ -409,12 +409,12 @@ class _RunQuizState extends State<RunQuiz> {
                     fillColor: Colors.green,
                     border: InputBorder.none,
                     hintText: '?',
-                    hintStyle: TextStyle(fontFamily: 'text', fontSize: 30, color: Colors.white),
+                    hintStyle: TextStyle(fontFamily: 'static', fontSize: 30, color: Colors.white),
                   ),
                   keyboardType: TextInputType.number,
-                  style: TextStyle(fontFamily: 'text', fontSize: 30, color: Colors.white),
+                  style: TextStyle(fontFamily: 'static', fontSize: 30, color: Colors.white),
                 ) :
-                Text(quizMain.numbers()[index].toString(), style: TextStyle(fontFamily: 'text', fontSize: 30)),
+                Text(quizMain.numbers()[index].toString(), style: TextStyle(fontFamily: 'static', fontSize: 30)),
               );
             },
             shrinkWrap: true, // 그리드 뷰가 차지하는 공간을 내용물에 맞춤
@@ -480,7 +480,7 @@ class _RunQuizState extends State<RunQuiz> {
                   child: Text(
                       '답 확인하기',
                       style: TextStyle(
-                        fontFamily: 'text',
+                        fontFamily: 'static',
                         color: Colors.white,
                         fontSize: 40,
                       )

@@ -42,7 +42,7 @@ class _SetTotalProblemsState extends State<SetTotalProblems_missing> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
-                  fontFamily: 'text',
+                  fontFamily: 'static',
                   fontSize: 50.0,
                 ),
               ),
@@ -72,7 +72,7 @@ class _SetTotalProblemsState extends State<SetTotalProblems_missing> {
                   ),
                 ),
                 style: TextStyle(
-                  fontFamily: 'text',
+                  fontFamily: 'static',
                   fontSize: 80.0,
                 ),
               ),
@@ -104,7 +104,7 @@ class _SetTotalProblemsState extends State<SetTotalProblems_missing> {
                       child: Text(
                         '시작',
                         style: TextStyle(
-                          fontFamily: 'text',
+                          fontFamily: 'static',
                           color: Colors.white,
                           fontSize: 40,
                         ),
@@ -142,7 +142,7 @@ class _SetTotalProblemsState extends State<SetTotalProblems_missing> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
-                  fontFamily: 'text',
+                  fontFamily: 'static',
                   fontSize: 20.0,
                 ),
               ),

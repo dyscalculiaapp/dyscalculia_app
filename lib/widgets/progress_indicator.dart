@@ -45,7 +45,7 @@ class MyProgressIndicator extends StatelessWidget {
                 child: BorderedText(
                   text: label,
                   textStyle: TextStyle(
-                    fontFamily: 'text',
+                    fontFamily: 'static',
                     color: Colors.white,
                     fontSize: 25.0,
                   ),
@@ -58,7 +58,7 @@ class MyProgressIndicator extends StatelessWidget {
                 child: BorderedText(
                   text: '$correctProblem',
                   textStyle: TextStyle(
-                    fontFamily: 'text',
+                    fontFamily: 'static',
                     color: Colors.white,
                     fontSize: 25.0,
                   ),

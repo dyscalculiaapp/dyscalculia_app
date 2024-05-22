@@ -122,7 +122,7 @@ class NumPadNormal extends StatelessWidget {
                     child: Text(
                       '<',
                       style: const TextStyle(
-                          fontFamily: 'text',
+                          fontFamily: 'static',
                           fontWeight: FontWeight.bold, color: Colors.white, fontSize: 50),
                     ),
                   ),
@@ -153,7 +153,7 @@ class NumPadNormal extends StatelessWidget {
                     child: Text(
                       '추천',
                       style: const TextStyle(
-                          fontFamily: 'text',
+                          fontFamily: 'static',
                           fontWeight: FontWeight.bold, color: Colors.white, fontSize: 30),
                     ),
                   ),
@@ -203,7 +203,7 @@ class NumberButton extends StatelessWidget {
           child: Text(
             number.toString(),
             style: const TextStyle(
-              fontFamily: 'text',
+              fontFamily: 'static',
                 fontWeight: FontWeight.bold, color: Colors.white, fontSize: 40),
           ),
         ),

@@ -35,6 +35,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
+  material_design_icons_flutter: ^5.0.0
   shared_preferences: ^2.0.15
   intl: ^0.19.0
   table_calendar: ^3.1.1
@@ -80,7 +81,35 @@ flutter:
   fonts:
     - family: text
       fonts:
-        - asset: assets/fonts/letter/aBallet.ttf
+        - asset: assets/fonts/nexon/NEXONLv1GothicRegular.ttf
+        - asset: assets/fonts/nexon/NEXONLv1GothicLight.ttf
+        - asset: assets/fonts/nexon/NEXONLv1GothicBold.ttf
+    - family: static
+      fonts:
+        - asset: assets/fonts/static/NotoSansKR-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/static/NotoSansKR-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/static/NotoSansKR-Light.ttf
+          weight: 300
+        - asset: assets/fonts/static/NotoSansKR-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/static/NotoSansKR-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/static/NotoSansKR-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/static/NotoSansKR-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/static/NotoSansKR-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/static/NotoSansKR-Black.ttf
+          weight: 900
+    - family: nanum
+      fonts:
+        - asset: assets/fonts/nanum/NanumGothicBold.ttf
+        - asset: assets/fonts/nanum/NanumGothicExtraBold.ttf
+        - asset: assets/fonts/nanum/NanumGothic.ttf
+        - asset: assets/fonts/nanum/NanumGothicLight.ttf
     - family: number
       fonts:
         - asset: assets/fonts/number/aCubeG.ttf

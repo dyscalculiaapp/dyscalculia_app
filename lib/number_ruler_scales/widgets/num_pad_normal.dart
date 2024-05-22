@@ -128,7 +128,7 @@ class NumPadNormal extends StatelessWidget {
                     child: Text(
                       '<',
                       style: TextStyle(
-                          fontFamily: 'text',
+                          fontFamily: 'static',
                           fontWeight: FontWeight.bold, color: Colors.white, fontSize: fontSizeL),
                     ),
                   ),
@@ -159,7 +159,7 @@ class NumPadNormal extends StatelessWidget {
                     child: Text(
                       buttonText,
                       style: TextStyle(
-                          fontFamily: 'text',
+                          fontFamily: 'static',
                           fontWeight: FontWeight.bold, color: Colors.white, fontSize: fontSizeR),
                     ),
                   ),
@@ -209,7 +209,7 @@ class NumberButton extends StatelessWidget {
           child: Text(
             number.toString(),
             style: TextStyle(
-              fontFamily: 'text',
+              fontFamily: 'static',
                 fontWeight: FontWeight.bold, color: Colors.white, fontSize: 40),
           ),
         ),

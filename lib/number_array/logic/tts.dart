@@ -34,7 +34,7 @@ class Tts extends StatelessWidget {
               //그림자색
               padding: EdgeInsets.all(30.0),
               //버튼 내 여백
-              textStyle: const TextStyle(fontFamily: 'text', fontSize: 20)),
+              textStyle: const TextStyle(fontFamily: 'static', fontSize: 20)),
           child: Text(
             '숫자 발음 듣기',
           ),

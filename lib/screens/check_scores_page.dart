@@ -13,6 +13,11 @@ class CheckScores extends StatelessWidget {
     return prefs.getInt('${key}_$date') ?? 0;
   }
 
+  Future<int> loadGoal(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(key) ?? 20; // 기본값을 20으로 설정
+  }
+
   @override
   Widget build(BuildContext context) {
     List<DateTime> dates = List.generate(30, (index) => DateTime.now().subtract(Duration(days: index))); // 지난 30일 날짜 생성
@@ -28,24 +33,40 @@ class CheckScores extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: dates.length,
-                  itemBuilder: (context, index) {
-                    String date = DateFormat('yyyy-MM-dd').format(dates[index]);
-                    return Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            date,
-                            style: TextStyle(fontFamily: 'text', fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        generateProgressIndicator(context, 'correctProblemArrayCount', date, '수 위치 찾기', Colors.green),
-                        generateProgressIndicator(context, 'correctProblemRulerCount', date, '눈금 수 찾기', Colors.red),
-                        generateProgressIndicator(context, 'correctProblemMissingCount', date, '사라진 수 찾기', Colors.blue),
-                        Divider(thickness: 2),
-                      ],
+                child: FutureBuilder(
+                  future: Future.wait([
+                    loadGoal('goalArray'),
+                    loadGoal('goalRuler'),
+                    loadGoal('goalMissing'),
+                  ]),
+                  builder: (context, AsyncSnapshot<List<int>> snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    int goalArray = snapshot.data![0];
+                    int goalRuler = snapshot.data![1];
+                    int goalMissing = snapshot.data![2];
+
+                    return ListView.builder(
+                      itemCount: dates.length,
+                      itemBuilder: (context, index) {
+                        String date = DateFormat('yyyy-MM-dd').format(dates[index]);
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                date,
+                                style: TextStyle(fontFamily: 'static', fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            generateProgressIndicator(context, 'correctProblemArrayCount', date, '수 위치 찾기', Colors.orangeAccent, goalArray),
+                            generateProgressIndicator(context, 'correctProblemRulerCount', date, '눈금 수 찾기', Colors.blue, goalRuler),
+                            generateProgressIndicator(context, 'correctProblemMissingCount', date, '사라진 수 찾기', Colors.pinkAccent, goalMissing),
+                            Divider(thickness: 2),
+                          ],
+                        );
+                      },
                     );
                   },
                 ),
@@ -80,7 +101,7 @@ class CheckScores extends StatelessWidget {
     );
   }
 
-  Widget generateProgressIndicator(BuildContext context, String key, String date, String label, Color color) {
+  Widget generateProgressIndicator(BuildContext context, String key, String date, String label, Color color, int goal) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal:20.0, vertical: 8.0),
       child: FutureBuilder<int>(
@@ -88,7 +109,7 @@ class CheckScores extends StatelessWidget {
         builder: (context, snapshot) {
           return MyProgressIndicator(
             label: label,
-            totalProblem: 20,
+            totalProblem: goal, // 사용자 목표를 totalProblem으로 설정
             correctProblem: snapshot.data ?? 0,
             minHeight: 50.0,
             color: color,

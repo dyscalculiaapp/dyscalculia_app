@@ -17,15 +17,28 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   Map<DateTime, List<String>> _eventMarkers = {};
+  int goalArray = 20;
+  int goalRuler = 20;
+  int goalMissing = 20;
 
   @override
   void initState() {
     super.initState();
+    _loadGoals();
     _loadMarkerData();
   }
 
   DateTime _stripTime(DateTime date) {
     return DateTime(date.year, date.month, date.day);
+  }
+
+  Future<void> _loadGoals() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      goalArray = prefs.getInt('goalArray') ?? 20;
+      goalRuler = prefs.getInt('goalRuler') ?? 20;
+      goalMissing = prefs.getInt('goalMissing') ?? 20;
+    });
   }
 
   Future<void> _loadMarkerData() async {
@@ -39,13 +52,13 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
       String dateString = DateFormat('yyyy-MM-dd').format(day.toLocal());
 
       int arrayCount = prefs.getInt('correctProblemArrayCount_$dateString') ?? 0;
-      if (arrayCount >= 20) dailyMarkers.add('array');
+      if (arrayCount >= goalArray) dailyMarkers.add('array');
 
       int rulerCount = prefs.getInt('correctProblemRulerCount_$dateString') ?? 0;
-      if (rulerCount >= 20) dailyMarkers.add('ruler');
+      if (rulerCount >= goalRuler) dailyMarkers.add('ruler');
 
       int missingCount = prefs.getInt('correctProblemMissingCount_$dateString') ?? 0;
-      if (missingCount >= 20) dailyMarkers.add('missing');
+      if (missingCount >= goalMissing) dailyMarkers.add('missing');
 
       if (dailyMarkers.isNotEmpty) {
         newMarkers[_stripTime(day)] = dailyMarkers;
@@ -155,7 +168,7 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                             child: Text(
                               '$dateString',
                               style: TextStyle(
-                                fontFamily: 'text',
+                                fontFamily: 'static',
                                 fontSize: 30.0,
                                 color: Colors.green,
                               ),
@@ -166,9 +179,9 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                             padding: const EdgeInsets.symmetric(vertical: 50.0),
                             child: Column(
                               children: [
-                                _generateProgressIndicator(context, '수 위치 찾기', arrayCount, Colors.green),
-                                _generateProgressIndicator(context, '눈금 수 찾기', rulerCount, Colors.red),
-                                _generateProgressIndicator(context, '사라진 수 찾기', missingCount, Colors.blue),
+                                _generateProgressIndicator(context, '수 위치 찾기', arrayCount, Colors.green, goalArray),
+                                _generateProgressIndicator(context, '눈금 수 찾기', rulerCount, Colors.red, goalRuler),
+                                _generateProgressIndicator(context, '사라진 수 찾기', missingCount, Colors.blue, goalMissing),
                               ],
                             ),
                           ),
@@ -190,7 +203,7 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                                   child: Text(
                                     'Close',
                                     style: TextStyle(
-                                      fontFamily: 'text',
+                                      fontFamily: 'static',
                                       fontSize: 30.0,
                                       color: Colors.green,
                                     ),
@@ -225,12 +238,17 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
     return prefs.getInt('${key}_$date') ?? 0;
   }
 
-  Widget _generateProgressIndicator(BuildContext context, String label, int correctProblem, Color color) {
+  Future<int> loadGoal(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(key) ?? 20;
+  }
+
+  Widget _generateProgressIndicator(BuildContext context, String label, int correctProblem, Color color, int goal) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: MyProgressIndicator(
         label: label,
-        totalProblem: 20,
+        totalProblem: goal,
         correctProblem: correctProblem,
         minHeight: 60.0,
         color: color,
@@ -252,217 +270,233 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
               ),
               Expanded(
-                child: TableCalendar(
-                  locale: 'ko_KR',
-                  firstDay: DateTime.utc(2024, 01, 01),
-                  lastDay: DateTime.utc(2100, 3, 14),
-                  focusedDay: _focusedDay,
-                  selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-                  onDaySelected: (selectedDay, focusedDay) {
-                    setState(() {
-                      _selectedDay = selectedDay;
-                      _focusedDay = focusedDay;
-                      _showDayDetailsDialog(selectedDay);  // 날짜 선택 시 다이얼로그 표시
-                    });
-                  },
-                  eventLoader: _getEventsForDay,
-                  daysOfWeekHeight: 40,
-                  rowHeight: 150.0,
-                  headerStyle: HeaderStyle(
-                    titleCentered: true,
-                    titleTextFormatter: (date, locale) => DateFormat.yMMMM(locale).format(date),
-                    formatButtonVisible: false,
-                    titleTextStyle: TextStyle(
-                      fontFamily: 'text',
-                      fontSize: 30.0,
-                      color: Colors.green,
-                    ),
-                    headerPadding: EdgeInsets.symmetric(vertical: 10.0),
-                    leftChevronIcon: Icon(Icons.arrow_left, size: 40.0),
-                    rightChevronIcon: Icon(Icons.arrow_right, size: 40.0),
-                  ),
-                  daysOfWeekStyle: DaysOfWeekStyle(
-                    weekdayStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20.0,
-                    ),
-                    weekendStyle: TextStyle(
-                      color: Colors.red,
-                      fontSize: 20.0,
-                    ),
-                    dowTextFormatter: (date, locale) {
-                      String weekday = DateFormat.E(locale).format(date);
-                      return weekday;
-                    },
-                  ),
-                  calendarStyle: CalendarStyle(
-                    defaultTextStyle: TextStyle(
-                      color: Colors.black,
-                    ),
-                    weekendTextStyle: TextStyle(
-                      color: Colors.red,
-                    ),
-                    outsideTextStyle: TextStyle(
-                      color: Colors.grey,
-                    ),
-                    selectedDecoration: BoxDecoration(
-                      color: Colors.transparent,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.green, width: 2.0), // 테두리만 있는 원
-                    ),
-                    todayDecoration: BoxDecoration(
-                      color: Colors.green,
-                      shape: BoxShape.circle,
-                    ),
-                    tableBorder: const TableBorder(
-                      top: BorderSide(
-                          color: Colors.grey
-                      ),
-                      bottom: BorderSide(
-                          color: Colors.grey
-                      ),
-                      // calendar 의 내부 가로선
-                      horizontalInside: BorderSide(
-                          color: Colors.grey
-                      ),
-                      borderRadius: BorderRadius.zero,
-                    ),
-                  ),
-                  calendarBuilders: CalendarBuilders(
-                    defaultBuilder: (context, day, focusedDay) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15.0),
-                            child: Text(
-                              '${day.day}',  // 숫자만 표시
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                color: _getTextColor(day),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                    outsideBuilder: (context, day, focusedDay) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15.0),
-                            child: Text(
-                              '${day.day}',  // 숫자만 표시
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                color: _getTextColorOut(day),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                    selectedBuilder: (context, day, focusedDay) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                shape: BoxShape.circle,
-                                border: Border.all(color: Colors.green, width: 2.0), // 테두리만 있는 원
-                              ),
-                              width: 40,
-                              height: 40,
-                              child: Center(
-                                child: Text(
-                                  '${day.day}',  // 숫자만 표시
-                                  style: TextStyle(
-                                    color: _getTextColor(day),
-                                    fontSize: 20.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                    todayBuilder: (context, day, focusedDay) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.green,
-                                shape: BoxShape.circle,
-                              ),
-                              width: 40,
-                              height: 40,
-                              child: Center(
-                                child: Text(
-                                  '${day.day}',  // 숫자만 표시
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                    markerBuilder: (context, day, events) {
-                      if (events.isNotEmpty) {
-                        return Positioned(
-                          bottom: 10,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: events.map((event) {
-                              Color markerColor;
-                              switch (event) {
-                                case 'array':
-                                  markerColor = Colors.green;
-                                  break;
-                                case 'ruler':
-                                  markerColor = Colors.red;
-                                  break;
-                                case 'missing':
-                                  markerColor = Colors.blue;
-                                  break;
-                                default:
-                                  markerColor = Colors.transparent;
-                              }
-                              return Container(
-                                width: 40.0,
-                                height: 10.0,
-                                margin: EdgeInsets.symmetric(vertical: 2.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: markerColor,
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        );
-                      }
-                      return null;
-                    },
-                    dowBuilder: (context, day) {
-                      final text = DateFormat.E('ko_KR').format(day);
-                      return Center(
-                        child: Text(
-                          text,
-                          style: TextStyle(
-                            color: _getDowTextColor(text),
-                            fontSize: 20.0,
-                          ),
+                child: FutureBuilder<List<int>>(
+                  future: Future.wait([
+                    loadGoal('goalArray'),
+                    loadGoal('goalRuler'),
+                    loadGoal('goalMissing'),
+                  ]),
+                  builder: (context, AsyncSnapshot<List<int>> snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    goalArray = snapshot.data![0];
+                    goalRuler = snapshot.data![1];
+                    goalMissing = snapshot.data![2];
+
+                    return TableCalendar(
+                      locale: 'ko_KR',
+                      firstDay: DateTime.utc(2024, 01, 01),
+                      lastDay: DateTime.utc(2100, 3, 14),
+                      focusedDay: _focusedDay,
+                      selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                      onDaySelected: (selectedDay, focusedDay) {
+                        setState(() {
+                          _selectedDay = selectedDay;
+                          _focusedDay = focusedDay;
+                          _showDayDetailsDialog(selectedDay);  // 날짜 선택 시 다이얼로그 표시
+                        });
+                      },
+                      eventLoader: _getEventsForDay,
+                      daysOfWeekHeight: 40,
+                      rowHeight: 150.0,
+                      headerStyle: HeaderStyle(
+                        titleCentered: true,
+                        titleTextFormatter: (date, locale) => DateFormat.yMMMM(locale).format(date),
+                        formatButtonVisible: false,
+                        titleTextStyle: TextStyle(
+                          fontFamily: 'static',
+                          fontSize: 30.0,
+                          color: Colors.green,
                         ),
-                      );
-                    },
-                  ),
+                        headerPadding: EdgeInsets.symmetric(vertical: 10.0),
+                        leftChevronIcon: Icon(Icons.arrow_left, size: 40.0),
+                        rightChevronIcon: Icon(Icons.arrow_right, size: 40.0),
+                      ),
+                      daysOfWeekStyle: DaysOfWeekStyle(
+                        weekdayStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0,
+                        ),
+                        weekendStyle: TextStyle(
+                          color: Colors.red,
+                          fontSize: 20.0,
+                        ),
+                        dowTextFormatter: (date, locale) {
+                          String weekday = DateFormat.E(locale).format(date);
+                          return weekday;
+                        },
+                      ),
+                      calendarStyle: CalendarStyle(
+                        defaultTextStyle: TextStyle(
+                          color: Colors.black,
+                        ),
+                        weekendTextStyle: TextStyle(
+                          color: Colors.red,
+                        ),
+                        outsideTextStyle: TextStyle(
+                          color: Colors.grey,
+                        ),
+                        selectedDecoration: BoxDecoration(
+                          color: Colors.transparent,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.green, width: 2.0), // 테두리만 있는 원
+                        ),
+                        todayDecoration: BoxDecoration(
+                          color: Colors.green,
+                          shape: BoxShape.circle,
+                        ),
+                        tableBorder: const TableBorder(
+                          top: BorderSide(
+                              color: Colors.grey
+                          ),
+                          bottom: BorderSide(
+                              color: Colors.grey
+                          ),
+                          // calendar 의 내부 가로선
+                          horizontalInside: BorderSide(
+                              color: Colors.grey
+                          ),
+                          borderRadius: BorderRadius.zero,
+                        ),
+                      ),
+                      calendarBuilders: CalendarBuilders(
+                        defaultBuilder: (context, day, focusedDay) {
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15.0),
+                                child: Text(
+                                  '${day.day}',  // 숫자만 표시
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: _getTextColor(day),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                        outsideBuilder: (context, day, focusedDay) {
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15.0),
+                                child: Text(
+                                  '${day.day}',  // 숫자만 표시
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: _getTextColorOut(day),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                        selectedBuilder: (context, day, focusedDay) {
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: Colors.green, width: 2.0), // 테두리만 있는 원
+                                  ),
+                                  width: 40,
+                                  height: 40,
+                                  child: Center(
+                                    child: Text(
+                                      '${day.day}',  // 숫자만 표시
+                                      style: TextStyle(
+                                        color: _getTextColor(day),
+                                        fontSize: 20.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                        todayBuilder: (context, day, focusedDay) {
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  width: 40,
+                                  height: 40,
+                                  child: Center(
+                                    child: Text(
+                                      '${day.day}',  // 숫자만 표시
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                        markerBuilder: (context, day, events) {
+                          if (events.isNotEmpty) {
+                            return Positioned(
+                              bottom: 10,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: events.map((event) {
+                                  Color markerColor;
+                                  switch (event) {
+                                    case 'array':
+                                      markerColor = Colors.orangeAccent;
+                                      break;
+                                    case 'ruler':
+                                      markerColor = Colors.blue;
+                                      break;
+                                    case 'missing':
+                                      markerColor = Colors.pinkAccent;
+                                      break;
+                                    default:
+                                      markerColor = Colors.transparent;
+                                  }
+                                  return Container(
+                                    width: 40.0,
+                                    height: 10.0,
+                                    margin: EdgeInsets.symmetric(vertical: 2.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: markerColor,
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            );
+                          }
+                          return null;
+                        },
+                        dowBuilder: (context, day) {
+                          final text = DateFormat.E('ko_KR').format(day);
+                          return Center(
+                            child: Text(
+                              text,
+                              style: TextStyle(
+                                color: _getDowTextColor(text),
+                                fontSize: 20.0,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
                 ),
               ),
               Divider(height: 0, color: Colors.grey, thickness: 2.0,),

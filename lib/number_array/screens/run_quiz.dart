@@ -305,7 +305,7 @@ class _RunQuizState extends State<RunQuiz> {
                   child: Text(
                       '발음듣기',
                       style: TextStyle(
-                        fontFamily: 'text',
+                        fontFamily: 'static',
                         color: Colors.green,
                         fontSize: 30.0,
                       )
@@ -364,7 +364,7 @@ class _RunQuizState extends State<RunQuiz> {
                   child: Text(
                       '종료하기',
                       style: TextStyle(
-                        fontFamily: 'text',
+                        fontFamily: 'static',
                         color: Colors.green,
                         fontSize: 30.0,
                       )
@@ -384,12 +384,12 @@ class _RunQuizState extends State<RunQuiz> {
               Text(
                 '<' + quizMain.question() + '>',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontFamily: 'text', fontSize: 60.0),
+                style: TextStyle(fontFamily: 'static', fontSize: 60.0),
               ),
               Text(
                 quizMain.question2(),
                 textAlign: TextAlign.center,
-                style: TextStyle(fontFamily: 'text', fontSize: 30.0),
+                style: TextStyle(fontFamily: 'static', fontSize: 30.0),
               ),
             ],
           ),
@@ -404,7 +404,7 @@ class _RunQuizState extends State<RunQuiz> {
             controller: _myController,
             textAlign: TextAlign.center,
             showCursor: false,
-            style: const TextStyle(fontFamily: 'text', fontSize: 50),
+            style: const TextStyle(fontFamily: 'static', fontSize: 50),
             // Disable the default soft keybaord
             keyboardType: TextInputType.none,
             inputFormatters: <TextInputFormatter>[
@@ -457,7 +457,7 @@ class _RunQuizState extends State<RunQuiz> {
                   child: Text(
                       '답 확인하기',
                       style: TextStyle(
-                        fontFamily: 'text',
+                        fontFamily: 'static',
                         color: Colors.white,
                         fontSize: 30,
                       )

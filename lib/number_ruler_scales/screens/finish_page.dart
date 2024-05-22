@@ -71,7 +71,7 @@ class _FinishScreenState extends State<FinishScreen> {
                   child: Text(
                     '결과',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontFamily: 'text', fontSize: 80.0, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontFamily: 'static', fontSize: 80.0, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -81,7 +81,7 @@ class _FinishScreenState extends State<FinishScreen> {
                   child: Text(
                     '${widget.totalProblem} 문제 중에 \n${widget.correctProblem} 문제 맞혔습니다!\n\n100점 만점에',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontFamily: 'text', fontSize: 40.0),
+                    style: TextStyle(fontFamily: 'static', fontSize: 40.0),
                   ),
                 ),
               ),
@@ -91,7 +91,7 @@ class _FinishScreenState extends State<FinishScreen> {
                   child: Text(
                     '$roundedPercentageScore점',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontFamily: 'text', fontSize: 80.0),
+                    style: TextStyle(fontFamily: 'static', fontSize: 80.0),
                   ),
                 ),
               ),
@@ -101,12 +101,12 @@ class _FinishScreenState extends State<FinishScreen> {
                     ? Text(
                   '잘했습니다!',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.cyan.shade500, fontFamily: 'text', fontSize: 40.0),
+                  style: TextStyle(color: Colors.cyan.shade500, fontFamily: 'static', fontSize: 40.0),
                 )
                     : Text(
                   '조금 더 노력하세요!',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.red.shade400, fontFamily: 'text', fontSize: 40.0),
+                  style: TextStyle(color: Colors.red.shade400, fontFamily: 'static', fontSize: 40.0),
                 ),
               ),
             ]),
@@ -121,7 +121,7 @@ class _FinishScreenState extends State<FinishScreen> {
               ),
               child: Text(
                 '처음으로',
-                style: TextStyle(color: Colors.white, fontFamily: 'text', fontSize: 40.0),
+                style: TextStyle(color: Colors.white, fontFamily: 'static', fontSize: 40.0),
               ),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));

@@ -36,14 +36,15 @@ class _SetTotalProblemsState extends State<SetTotalProblems_array> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.0),
+              padding: EdgeInsets.symmetric(vertical: 40.0),
               child: Text(
-                '풀 문제 수를\n입력해주세요',
+                '풀 문제 수를 입력하세요',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
-                  fontFamily: 'text',
-                  fontSize: 50.0,
+                  fontFamily: 'static',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 40.0,
                 ),
               ),
             ),
@@ -72,7 +73,8 @@ class _SetTotalProblemsState extends State<SetTotalProblems_array> {
                   ),
                 ),
                 style: TextStyle(
-                  fontFamily: 'text',
+                  fontFamily: 'static',
+                  fontWeight: FontWeight.w600,
                   fontSize: 80.0,
                 ),
               ),
@@ -99,8 +101,9 @@ class _SetTotalProblemsState extends State<SetTotalProblems_array> {
                       child: Text(
                         '시작',
                         style: TextStyle(
-                          fontFamily: 'text',
+                          fontFamily: 'static',
                           color: Colors.white,
+                          fontWeight: FontWeight.w600,
                           fontSize: 40,
                         ),
                       ),
@@ -137,7 +140,7 @@ class _SetTotalProblemsState extends State<SetTotalProblems_array> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
-                  fontFamily: 'text',
+                  fontFamily: 'static',
                   fontSize: 20.0,
                 ),
               ),

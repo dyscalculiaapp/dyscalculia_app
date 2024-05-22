@@ -43,7 +43,7 @@ class MyProgressIndicator extends StatelessWidget {
                 child: BorderedText(
                   text: '푼 문제 ${solvedProblem}',
                   textStyle: TextStyle(
-                    fontFamily: 'text',
+                    fontFamily: 'static',
                     color: Colors.white,
                     fontSize: 25.0,
                   ),
@@ -53,16 +53,16 @@ class MyProgressIndicator extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 20.0),
-                  child: BorderedText(
-                    text: '남은 문제 ${totalProblem - solvedProblem}',
-                    textStyle: TextStyle(
-                      fontFamily: 'text',
-                      color: valueColor,
-                      fontSize: 25.0,
-                    ),
-                    borderColor: backgroundColor,
-                    strokeWidth: 5.0,
+                child: BorderedText(
+                  text: '남은 문제 ${totalProblem - solvedProblem}',
+                  textStyle: TextStyle(
+                    fontFamily: 'static',
+                    color: Colors.white,
+                    fontSize: 25.0,
                   ),
+                  borderColor: valueColor,
+                  strokeWidth: 5.0,
+                ),
               ),
             ],
           ),
