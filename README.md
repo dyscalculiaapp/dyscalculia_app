@@ -1,16 +1,4 @@
-# dyscalculia_app
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+수 위치 찾기, 눈금 수 찾기, 사라진 수 찾기 병합
+리스트뷰 페이지, 달력 페이지 추가
+- 문제 할당량 각 20으로 설정, 20문제 이상 풀었을 시 달력에 해당 문제 색상으로 마커 표시
+- > 문제 할당량 정할 수 있는 페이지 추가한다면 더 좋을 듯
