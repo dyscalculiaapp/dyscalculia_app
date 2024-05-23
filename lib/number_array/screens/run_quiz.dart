@@ -72,9 +72,7 @@ class _RunQuizState extends State<RunQuiz> {
               return MYAnswerDialog(
                 backgroundColor: Colors.white,
                 borderRadius: 50.0,
-                shadowColor: Colors.blue,
                 contentText: "맞았습니다!\n",
-                font: 'text',
                 underlineGap: -15,
                 contentTextColor: Colors.cyan.shade500,
                 contentFontSize: 60.0,
@@ -120,9 +118,7 @@ class _RunQuizState extends State<RunQuiz> {
               return MYAnswerDialog(
                 backgroundColor: Colors.white,
                 borderRadius: 50.0,
-                shadowColor: Colors.blue,
                 contentText: "맞았습니다!\n",
-                font: 'text',
                 underlineGap: -15,
                 contentTextColor: Colors.cyan.shade500,
                 contentFontSize: 60.0,
@@ -153,9 +149,7 @@ class _RunQuizState extends State<RunQuiz> {
                 return MYAnswerDialog(
                   backgroundColor: Colors.white,
                   borderRadius: 50.0,
-                  shadowColor: Colors.blue,
                   contentText: "\n틀렸습니다!\n",
-                  font: 'text',
                   underlineGap: -15,
                   contentTextColor: Colors.red.shade400,
                   contentFontSize: 60.0,
@@ -184,9 +178,7 @@ class _RunQuizState extends State<RunQuiz> {
                 return MYAnswerDialog(
                   backgroundColor: Colors.white,
                   borderRadius: 50.0,
-                  shadowColor: Colors.blue,
                   contentText: "틀렸습니다!\n",
-                  font: 'text',
                   underlineGap: -15,
                   contentTextColor: Colors.red.shade400,
                   contentFontSize: 60.0,
@@ -229,9 +221,7 @@ class _RunQuizState extends State<RunQuiz> {
                   return MYAnswerDialog(
                     backgroundColor: Colors.white,
                     borderRadius: 50.0,
-                    shadowColor: Colors.blue,
                     contentText: "틀렸습니다!\n",
-                    font: 'text',
                     underlineGap: -15,
                     contentTextColor: Colors.red.shade400,
                     contentFontSize: 60.0,
@@ -263,9 +253,8 @@ class _RunQuizState extends State<RunQuiz> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        Expanded(
-          flex: 2,
-          child: SizedBox(),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
         ),
         Padding(
           padding: EdgeInsets.all(20),
@@ -278,11 +267,15 @@ class _RunQuizState extends State<RunQuiz> {
             valueColor: Colors.green,
           )
         ),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            verticalDirection: VerticalDirection.down,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.fromLTRB(00.0, 00.0, 0.0, 0.0),
+                padding: EdgeInsets.symmetric(horizontal: 0.0),
                 child: TextButton(
                   onPressed: () {
                     flutterTts.speak(quizMain.question());
@@ -294,7 +287,7 @@ class _RunQuizState extends State<RunQuiz> {
                     //글씨색
                     shadowColor: Colors.blue,
                     //그림자색
-                    padding: EdgeInsets.all(10.0),
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
                     //버튼 내 여백
                     //side: BorderSide(color: Colors.pink.shade200, width: 3.0,),
                     //테두리선
@@ -303,47 +296,41 @@ class _RunQuizState extends State<RunQuiz> {
                     //),
                   ),
                   child: Text(
-                      '발음듣기',
-                      style: TextStyle(
-                        fontFamily: 'static',
-                        color: Colors.green,
-                        fontSize: 30.0,
-                      )
+                    '발음듣기',
+                    style: TextStyle(
+                      fontFamily: 'static',
+                      fontWeight: FontWeight.w700,
+                      color: Colors.green,
+                      fontSize: 33.0,
+                    ),
                   ),
                 ),
               ),
               Padding(
-                  padding: EdgeInsets.all(0),
-                  child :MYChanceIndicator(
-                    totalChances: _chance,
-                    usedChances: _attempt,
-                    iconSize: 40.0,
-                    fillColor: Colors.red,
-                    emptyColor: Colors.grey,
-                  )
+                padding: EdgeInsets.all(0),
+                child :MYChanceIndicator(
+                  totalChances: _chance,
+                  usedChances: _attempt,
+                  iconSize: 45.0,
+                  fillColor: Colors.red,
+                  emptyColor: Colors.grey,
+                ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(00.0, 00.0, 0.0, 0.0),
                 child: TextButton(
-                  onPressed: () /*{
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                          return MainScreen();
-                        }));
-                  },*/
-                  {quizMain.next();
+                  onPressed: () {
+                    quizMain.next();
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) {
-                              return FinishScreen(
-                                solevdProblem: _solvedProblem,
-                                totalProblem: _totalProblem,
-                                score: _score,
-                                correctProblem: _correctProblem,
-                              );
-                            }
-                        )
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return FinishScreen(
+                          solevdProblem: _solvedProblem,
+                          totalProblem: _totalProblem,
+                          score: _score,
+                          correctProblem: _correctProblem,
+                        );
+                      },),
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -353,7 +340,7 @@ class _RunQuizState extends State<RunQuiz> {
                     //글씨색
                     shadowColor: Colors.blue,
                     //그림자색
-                    padding: EdgeInsets.all(10.0),
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
                     //버튼 내 여백
                     //side: BorderSide(color: Colors.pink.shade200, width: 3.0,),
                     //테두리선
@@ -362,16 +349,19 @@ class _RunQuizState extends State<RunQuiz> {
                     //),
                   ),
                   child: Text(
-                      '종료하기',
-                      style: TextStyle(
-                        fontFamily: 'static',
-                        color: Colors.green,
-                        fontSize: 30.0,
-                      )
+                    '종료하기',
+                    style: TextStyle(
+                      fontFamily: 'static',
+                      fontWeight: FontWeight.w700,
+                      color: Colors.green,
+                      fontSize: 33.0,
+                    ),
                   ),
                 ),
               ),
-            ]),
+            ],
+          ),
+        ),
         Expanded(
           flex: 3,
           child: SizedBox(),
@@ -381,42 +371,68 @@ class _RunQuizState extends State<RunQuiz> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                '<' + quizMain.question() + '>',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontFamily: 'static', fontSize: 60.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                verticalDirection: VerticalDirection.up,
+                children: [
+                  Text(
+                    '❝',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'static',
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                      fontSize: 50.0,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Text(
+                      quizMain.question(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'static',
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                        fontSize: 80.0,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    '❞',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'static',
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                      fontSize: 50.0,
+                    ),
+                  ),
+                ],
               ),
               Text(
                 quizMain.question2(),
                 textAlign: TextAlign.center,
-                style: TextStyle(fontFamily: 'static', fontSize: 30.0),
+                style: TextStyle(
+                  fontFamily: 'static',
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
+                  fontSize: 33.0,
+                ),
               ),
             ],
           ),
         ),
         Expanded(
-          flex: 4,
+          flex: 3,
           child: SizedBox(),
         ),
-        /*Padding(
-          padding: EdgeInsets.fromLTRB(100.0, 0.0, 100.0, 0.0),
-          child: TextField(
-            controller: _myController,
-            textAlign: TextAlign.center,
-            showCursor: false,
-            style: const TextStyle(fontFamily: 'static', fontSize: 50),
-            // Disable the default soft keybaord
-            keyboardType: TextInputType.none,
-            inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.digitsOnly
-            ],
-          ),
-        ),*/
         NumPad(
           key: _numPadKey,
-          buttonSize: 50,
+          buttonSize: MediaQuery.of(context).size.width * 0.09,
           paddingTB : 20,
-          paddingElse :5,
+          paddingElse : 5,
           buttonColor: Colors.green,
           numberColor: Colors.white,
           controller: _myController,
@@ -426,7 +442,7 @@ class _RunQuizState extends State<RunQuiz> {
           child: SizedBox(),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 40.0), // 외부 패딩 지정
+          padding: EdgeInsets.symmetric(horizontal: 80.0), // 외부 패딩 지정
           child: Row(
             children: <Widget>[
               Expanded(
@@ -446,20 +462,18 @@ class _RunQuizState extends State<RunQuiz> {
                     //그림자 깊이
                     surfaceTintColor : Colors.transparent,
 
-                    padding: EdgeInsets.all(20.0),
+                    padding: EdgeInsets.symmetric(horizontal: 0, vertical: 25),
                     //버튼 내 여백
                     //side: BorderSide(color: Colors.pink.shade200, width: 3.0,),
-                    //테두리선
-                    /*shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    ),*/
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   ),
                   child: Text(
-                      '답 확인하기',
+                      '제출하기',
                       style: TextStyle(
                         fontFamily: 'static',
+                        fontWeight: FontWeight.w700,
                         color: Colors.white,
-                        fontSize: 30,
+                        fontSize: 40,
                       )
                   ),
                 ),

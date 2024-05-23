@@ -308,7 +308,10 @@ class _NumberButtonState extends State<NumberButton> {
           child: Text(
             widget.number.toString(),
             style: TextStyle(
-                fontWeight: FontWeight.w900, fontSize: 25),
+              fontFamily: 'static',
+              fontWeight: FontWeight.w800,
+              fontSize: 25,
+            ),
           ),
         ),
       ),

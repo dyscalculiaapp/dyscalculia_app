@@ -73,6 +73,7 @@ class _MainScreenState extends State<MainScreen> {
                         elevation: 5,
                         surfaceTintColor: Colors.transparent,
                         padding: EdgeInsets.all(20.0),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                       ),
                       child: Text(
                         '수 위치 찾기',
@@ -110,6 +111,7 @@ class _MainScreenState extends State<MainScreen> {
                         elevation: 5,
                         surfaceTintColor: Colors.transparent,
                         padding: EdgeInsets.all(20.0),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                       ),
                       child: Text(
                         '눈금 수 찾기',
@@ -147,6 +149,7 @@ class _MainScreenState extends State<MainScreen> {
                         elevation: 5,
                         surfaceTintColor: Colors.transparent,
                         padding: EdgeInsets.all(20.0),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                       ),
                       child: Text(
                         '사라진 수 찾기',
@@ -188,6 +191,7 @@ class _MainScreenState extends State<MainScreen> {
                         elevation: 5,
                         surfaceTintColor: Colors.transparent,
                         padding: EdgeInsets.all(20.0),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                       ),
                       child: Text(
                         '달성도 확인',
@@ -225,6 +229,7 @@ class _MainScreenState extends State<MainScreen> {
                         elevation: 5,
                         surfaceTintColor: Colors.transparent,
                         padding: EdgeInsets.all(20.0),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                       ),
                       child: Text(
                         '안내장',
@@ -262,6 +267,7 @@ class _MainScreenState extends State<MainScreen> {
                         elevation: 5,
                         surfaceTintColor: Colors.transparent,
                         padding: EdgeInsets.all(20.0),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                       ),
                       child: Text(
                         '설정',

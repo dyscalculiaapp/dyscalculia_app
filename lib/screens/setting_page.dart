@@ -150,16 +150,8 @@ class Setting extends StatelessWidget {
                   children: [
                     IconButton(
                       icon: Icon(Icons.home, size: 45),
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen())),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.date_range, size: 40),
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                              return TableCalendarScreen();
-                            })
-                        );
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
                       },
                     ),
                   ],

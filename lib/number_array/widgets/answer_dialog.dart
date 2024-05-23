@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 
 class MYAnswerDialog extends StatelessWidget {
   final Color backgroundColor;
-  final Color shadowColor;
   final double borderRadius;
   final String contentText;
-  final String font;
   final double underlineGap;
   final Color contentTextColor;
   final double contentFontSize;
@@ -22,10 +20,8 @@ class MYAnswerDialog extends StatelessWidget {
    MYAnswerDialog({
     Key? key,
     required this.backgroundColor,
-    required this.shadowColor,
     this.borderRadius = 20.0,
     required this.contentText,
-    required this.font,
     required this.underlineGap,
     required this.contentTextColor,
     required this.contentFontSize,
@@ -80,7 +76,7 @@ class MYAnswerDialog extends StatelessWidget {
       ),
       surfaceTintColor: Colors.transparent,
       elevation: 10.0,
-      shadowColor: shadowColor,
+      shadowColor: Colors.black,
       child: Container(
         child: Column(
           mainAxisSize: MainAxisSize.min, // 다이얼로그 크기를 최소화
@@ -130,7 +126,8 @@ class MYAnswerDialog extends StatelessWidget {
                   contentText,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontFamily: font,
+                    fontFamily: 'static',
+                    fontWeight: FontWeight.w900,
                     color: contentTextColor,
                     fontSize: contentFontSize,
                   ),
@@ -142,7 +139,7 @@ class MYAnswerDialog extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.transparent,
-                      fontFamily: font,
+                      fontFamily: 'text',
                       fontSize: contentFontSize,
                       decoration: TextDecoration.underline,
                       decorationColor: underlineColor,
@@ -157,8 +154,9 @@ class MYAnswerDialog extends StatelessWidget {
                   child: Text(
                     '$correctAnswer의 위치는',
                     style: TextStyle(
-                      fontFamily: font,
+                      fontFamily: 'static',
                       color: contentTextColor,
+                      fontWeight: FontWeight.w700,
                       fontSize: contentFontSize - 20,
                     ),
                   ),
@@ -181,7 +179,8 @@ class MYAnswerDialog extends StatelessWidget {
                         backgroundColor: actionButtonColor,
                         foregroundColor: actionTextColor,
                         surfaceTintColor: Colors.transparent,
-                        shadowColor: shadowColor,
+                        shadowColor: Colors.black,
+                        elevation: 5,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(borderRadius),
                         ),
@@ -190,8 +189,9 @@ class MYAnswerDialog extends StatelessWidget {
                       child: Text(
                         actionText,
                         style: TextStyle(
-                          fontFamily: font,
+                          fontFamily: 'static',
                           color: actionTextColor,
+                          fontWeight: FontWeight.w700,
                           fontSize: actionTextSize,
                         ),
                       ),
