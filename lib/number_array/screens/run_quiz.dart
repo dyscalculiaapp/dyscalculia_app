@@ -265,7 +265,7 @@ class _RunQuizState extends State<RunQuiz> {
             color: Colors.green, // 진행 표시기 색상
             backgroundColor: Colors.grey.shade300, // 배경 색상
             valueColor: Colors.green,
-          )
+          ),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -280,13 +280,11 @@ class _RunQuizState extends State<RunQuiz> {
                   onPressed: () {
                     flutterTts.speak(quizMain.question());
                   },
-                  style: ElevatedButton.styleFrom(
+                  style: TextButton.styleFrom(
                     backgroundColor: Colors.white,
                     //배경색
                     foregroundColor: Colors.green,
                     //글씨색
-                    shadowColor: Colors.blue,
-                    //그림자색
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
                     //버튼 내 여백
                     //side: BorderSide(color: Colors.pink.shade200, width: 3.0,),
@@ -333,13 +331,11 @@ class _RunQuizState extends State<RunQuiz> {
                       },),
                     );
                   },
-                  style: ElevatedButton.styleFrom(
+                  style: TextButton.styleFrom(
                     backgroundColor: Colors.white,
                     //배경색
                     foregroundColor: Colors.green,
                     //글씨색
-                    shadowColor: Colors.blue,
-                    //그림자색
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
                     //버튼 내 여백
                     //side: BorderSide(color: Colors.pink.shade200, width: 3.0,),

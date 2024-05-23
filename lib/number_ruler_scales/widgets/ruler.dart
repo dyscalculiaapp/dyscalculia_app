@@ -79,7 +79,11 @@ class RulerPainter extends CustomPainter {
       if ((startMark + i) % 5 == 0 && (startMark + i) != selectedMark) {
         textPainter.text = TextSpan(
           text: '${startMark + i}',
-          style: TextStyle(color: Colors.black, fontSize: 20),
+          style: TextStyle(
+            color: Colors.black,
+            fontFamily: 'static',
+            fontWeight: FontWeight.w500,
+            fontSize: 25,),
         );
         textPainter.layout();
         textPainter.paint(

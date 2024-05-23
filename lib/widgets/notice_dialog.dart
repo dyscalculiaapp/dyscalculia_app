@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class NoticeDialog extends StatelessWidget {
   final String notice;
@@ -11,7 +12,7 @@ class NoticeDialog extends StatelessWidget {
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.transparent,
       elevation: 10.0,
-      shadowColor: Colors.green,
+      shadowColor: Colors.black,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(60.0),
         side: BorderSide(color: Colors.green, width: 2.0), // 다이얼로그 테두리 색
@@ -19,44 +20,62 @@ class NoticeDialog extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width * 0.8,
         height: MediaQuery.of(context).size.height * 0.6,
-        padding: const EdgeInsets.all(20.0),
-        child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                '안내장',
-                style: TextStyle(
-                  fontFamily: 'static',
-                  fontSize: 50.0,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.green,
-                ),
-              ),
-              SizedBox(height: 20),
-              Text(
-                notice,
-                style: TextStyle(
-                  fontFamily: 'static',
-                  fontSize: 30.0,
-                ),
-              ),
-              SizedBox(height: 20),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(
-                  '닫기',
-                  style: TextStyle(
-                    fontFamily: 'static',
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.red,
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(
+                      '안내장',
+                      style: TextStyle(
+                        fontFamily: 'static',
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.green,
+                      ),
+                    ),
                   ),
-                ),
+                  Divider(height: 0, color: Colors.green, thickness: 2.0,),
+                  Expanded(
+                    child: SizedBox(),
+                    flex: 2,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      notice,
+                      style: TextStyle(
+                        fontFamily: 'static',
+                        fontSize: 40.0,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: SizedBox(),
+                    flex: 3,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Positioned(
+              top: 20.0,
+              right: 20.0,
+              child: IconButton(
+                icon: Icon(
+                  MdiIcons.closeThick,
+                ),
+                color: Colors.green,
+                iconSize: 40.0,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
