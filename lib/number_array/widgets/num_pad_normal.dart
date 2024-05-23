@@ -9,16 +9,16 @@ class NumPadNormal extends StatelessWidget {
   final Color buttonColor;
   final Color iconColor;
   final TextEditingController controller;
-  final Function delete;
-  final int recommend;
+  final Function left;
+  final Function right;
 
   const NumPadNormal({
     Key? key,
     this.buttonSize = 70,
     this.buttonColor = Colors.indigo,
     this.iconColor = Colors.amber,
-    required this.delete,
-    this.recommend = 10,
+    required this.left,
+    required this.right,
     required this.controller,
   }) : super(key: key);
 
@@ -119,7 +119,7 @@ class NumPadNormal extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   ),
                   onPressed: () {
-                    controller.text = recommend.toString();
+                    controller.text = left.toString();
                   },
                   child: Center(
                     child: Icon(
@@ -150,7 +150,7 @@ class NumPadNormal extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   ),
                   onPressed: () {
-                    delete();
+                    right();
                   },
                   child: Center(
                     child: Icon(
@@ -250,7 +250,7 @@ class NumberButton extends StatelessWidget {
             number.toString(),
             style: const TextStyle(
               fontFamily: 'static',
-                fontWeight: FontWeight.bold, color: Colors.white, fontSize: 50),
+                fontWeight: FontWeight.w700, color: Colors.white, fontSize: 50),
           ),
         ),
       ),

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 import 'package:dyscalculia_app/number_ruler_scales/widgets/progress_indicator.dart';
 import 'package:dyscalculia_app/number_ruler_scales/widgets/chance_indicator.dart';
-import 'package:dyscalculia_app/number_ruler_scales/widgets/num_pad_normal.dart';
+import 'package:dyscalculia_app/number_ruler_scales/widgets/num_pad.dart';
 import 'package:dyscalculia_app/number_ruler_scales/widgets/answer_dialog.dart';
 import 'package:dyscalculia_app/number_ruler_scales/logic/quiz_maker.dart';
 import 'package:dyscalculia_app/number_ruler_scales/screens/finish_page.dart';
@@ -408,24 +408,21 @@ class _RunQuizState extends State<RunQuiz> {
           flex: 4,
           child: SizedBox(),
         ),
-        NumPadNormal(
-          buttonSize: 100,
-          fontSizeL: 50,
-          fontSizeR: 70,
+        NumPad(
+          buttonSize: 110,
           buttonColor: Colors.green,
           iconColor: Colors.red.shade500,
           controller: _myController,
           left: () {
             if (_myController.text.isNotEmpty) {
-              _myController.text = _myController.text.substring(0, _myController.text.length - 1);
+              _myController.clear();
             }
           },
           right: () {
             if (_myController.text.isNotEmpty) {
-              _myController.clear();
+              _myController.text = _myController.text.substring(0, _myController.text.length - 1);
             }
           },
-          buttonText: '×',
         ),
         Expanded(
           flex: 2,

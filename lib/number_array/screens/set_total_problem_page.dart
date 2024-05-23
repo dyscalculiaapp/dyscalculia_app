@@ -101,12 +101,14 @@ class _SetTotalProblemsState extends State<SetTotalProblems_array> {
                 buttonColor: Colors.green,
                 iconColor: Colors.cyan.shade500,
                 controller: _myController,
-                delete: () {
+                left: () {
+                  _myController.text = 10.toString();
+                },
+                right: () {
                   if (_myController.text.isNotEmpty) {
                     _myController.text = _myController.text.substring(0, _myController.text.length - 1);
                   }
                 },
-                recommend: 10,
               ),
             ),
           ],

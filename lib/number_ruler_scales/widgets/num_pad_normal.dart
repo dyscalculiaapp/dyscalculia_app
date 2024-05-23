@@ -1,40 +1,33 @@
 import 'package:flutter/material.dart';
-
+import 'package:dyscalculia_app/number_ruler_scales/screens/quiz_page.dart';
 // KeyPad widget
 // This widget is reusable and its buttons are customizable (color, size)
 class NumPadNormal extends StatelessWidget {
   final double buttonSize;
-  final double fontSizeL;
-  final double fontSizeR;
   final Color buttonColor;
   final Color iconColor;
   final TextEditingController controller;
   final Function left;
   final Function right;
-  final String buttonText;
 
   const NumPadNormal({
     Key? key,
     this.buttonSize = 70,
-    this.fontSizeL = 70,
-    this.fontSizeR = 70,
     this.buttonColor = Colors.indigo,
     this.iconColor = Colors.amber,
     required this.left,
     required this.right,
     required this.controller,
-    required this.buttonText,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 30, right: 30),
       child: Column(
         children: [
           const SizedBox(height: 20),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             // implement the number keys (from 0 to 9) with the NumberButton widget
             // the NumberButton widget is defined in the bottom of this file
             children: [
@@ -60,7 +53,7 @@ class NumPadNormal extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               NumberButton(
                 number: 4,
@@ -84,7 +77,7 @@ class NumPadNormal extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               NumberButton(
                 number: 7,
@@ -108,7 +101,7 @@ class NumPadNormal extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // this button is used to delete the last number
               SizedBox(
@@ -117,19 +110,19 @@ class NumPadNormal extends StatelessWidget {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: iconColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(buttonSize / 2),
-                    ),
+                    foregroundColor: Colors.white,
+                    surfaceTintColor: Colors.transparent,
+                    shadowColor: Colors.black,
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   ),
                   onPressed: () {
-                    left();
+                    controller.text = left.toString();
                   },
                   child: Center(
-                    child: Text(
-                      '<',
-                      style: TextStyle(
-                          fontFamily: 'static',
-                          fontWeight: FontWeight.bold, color: Colors.white, fontSize: fontSizeL),
+                    child: Icon(
+                      Icons.favorite_border_rounded,
+                      size: 50,
                     ),
                   ),
                 ),
@@ -148,24 +141,67 @@ class NumPadNormal extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.all(0),
                     backgroundColor: iconColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(buttonSize / 2),
-                    ),
+                    foregroundColor: Colors.white,
+                    surfaceTintColor: Colors.transparent,
+                    shadowColor: Colors.black,
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   ),
                   onPressed: () {
                     right();
                   },
                   child: Center(
-                    child: Text(
-                      buttonText,
-                      style: TextStyle(
-                          fontFamily: 'static',
-                          fontWeight: FontWeight.bold, color: Colors.white, fontSize: fontSizeR),
+                    child: Icon(
+                      Icons.backspace_outlined,
+                      size: 50,
                     ),
                   ),
                 ),
               ),
             ],
+          ),
+          const SizedBox(height: 20),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: ElevatedButton(
+                    child: Text(
+                      '시작',
+                      style: TextStyle(
+                        fontFamily: 'static',
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 40,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: iconColor,
+                      foregroundColor: Colors.white,
+                      shadowColor: Colors.black,
+                      elevation: 5,
+                      surfaceTintColor: Colors.transparent,
+                      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 25),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    ),
+                    onPressed: () {
+                      int totalProblems = int.tryParse(controller.text) ?? 10;
+                      if (totalProblems == 0) {
+                        totalProblems = 10;
+                      }
+                      if (totalProblems > 50) {
+                        totalProblems = 50;
+                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => QuizScreen(totalProblems: totalProblems)),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -198,9 +234,11 @@ class NumberButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.all(0),
           backgroundColor: color,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(size / 2),
-          ),
+          foregroundColor: Colors.white,
+          surfaceTintColor: Colors.transparent,
+          shadowColor: Colors.black,
+          elevation: 5,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         ),
         onPressed: () {
           controller.text += number.toString();
@@ -210,7 +248,7 @@ class NumberButton extends StatelessWidget {
             number.toString(),
             style: TextStyle(
               fontFamily: 'static',
-                fontWeight: FontWeight.bold, color: Colors.white, fontSize: 40),
+                fontWeight: FontWeight.w700, color: Colors.white, fontSize: 50),
           ),
         ),
       ),
