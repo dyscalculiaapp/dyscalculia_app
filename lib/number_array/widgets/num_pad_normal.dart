@@ -117,7 +117,7 @@ class NumPadNormal extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   ),
                   onPressed: () {
-                    controller.text = left.toString();
+                    left();
                   },
                   child: Center(
                     child: Icon(
