@@ -169,6 +169,7 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                               '$dateString',
                               style: TextStyle(
                                 fontFamily: 'static',
+                                fontWeight: FontWeight.w500,
                                 fontSize: 30.0,
                                 color: Colors.green,
                               ),
@@ -179,9 +180,9 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                             padding: const EdgeInsets.symmetric(vertical: 50.0),
                             child: Column(
                               children: [
-                                _generateProgressIndicator(context, '수 위치 찾기', arrayCount, Colors.green, goalArray),
-                                _generateProgressIndicator(context, '눈금 수 찾기', rulerCount, Colors.red, goalRuler),
-                                _generateProgressIndicator(context, '사라진 수 찾기', missingCount, Colors.blue, goalMissing),
+                                _generateProgressIndicator(context, '수 위치 찾기', arrayCount, Colors.orangeAccent, goalArray),
+                                _generateProgressIndicator(context, '눈금 수 찾기', rulerCount, Colors.blue, goalRuler),
+                                _generateProgressIndicator(context, '사라진 수 찾기', missingCount, Colors.pinkAccent, goalMissing),
                               ],
                             ),
                           ),
@@ -201,7 +202,7 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                                 TextButton(
                                   onPressed: () => Navigator.of(context).pop(),
                                   child: Text(
-                                    'Close',
+                                    '닫기',
                                     style: TextStyle(
                                       fontFamily: 'static',
                                       fontSize: 30.0,
@@ -306,20 +307,31 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                         formatButtonVisible: false,
                         titleTextStyle: TextStyle(
                           fontFamily: 'static',
+                          fontWeight: FontWeight.w500,
                           fontSize: 30.0,
                           color: Colors.green,
                         ),
                         headerPadding: EdgeInsets.symmetric(vertical: 10.0),
-                        leftChevronIcon: Icon(Icons.arrow_left, size: 40.0),
-                        rightChevronIcon: Icon(Icons.arrow_right, size: 40.0),
+                        leftChevronIcon: Icon(
+                          Icons.arrow_left,
+                          size: 40.0,
+                        ),
+                        rightChevronIcon: Icon(
+                          Icons.arrow_right,
+                          size: 40.0,
+                        ),
                       ),
                       daysOfWeekStyle: DaysOfWeekStyle(
                         weekdayStyle: TextStyle(
                           color: Colors.black,
+                          fontFamily: 'static',
+                          fontWeight: FontWeight.w400,
                           fontSize: 20.0,
                         ),
                         weekendStyle: TextStyle(
                           color: Colors.red,
+                          fontFamily: 'static',
+                          fontWeight: FontWeight.w400,
                           fontSize: 20.0,
                         ),
                         dowTextFormatter: (date, locale) {
@@ -330,12 +342,21 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                       calendarStyle: CalendarStyle(
                         defaultTextStyle: TextStyle(
                           color: Colors.black,
+                          fontFamily: 'static',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20.0,
                         ),
                         weekendTextStyle: TextStyle(
                           color: Colors.red,
+                          fontFamily: 'static',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20.0,
                         ),
                         outsideTextStyle: TextStyle(
                           color: Colors.grey,
+                          fontFamily: 'static',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20.0,
                         ),
                         selectedDecoration: BoxDecoration(
                           color: Colors.transparent,
@@ -369,6 +390,8 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                                 child: Text(
                                   '${day.day}',  // 숫자만 표시
                                   style: TextStyle(
+                                    fontFamily: 'static',
+                                    fontWeight: FontWeight.w400,
                                     fontSize: 20.0,
                                     color: _getTextColor(day),
                                   ),
@@ -385,6 +408,8 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                                 child: Text(
                                   '${day.day}',  // 숫자만 표시
                                   style: TextStyle(
+                                    fontFamily: 'static',
+                                    fontWeight: FontWeight.w400,
                                     fontSize: 20.0,
                                     color: _getTextColorOut(day),
                                   ),
@@ -411,6 +436,8 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                                       '${day.day}',  // 숫자만 표시
                                       style: TextStyle(
                                         color: _getTextColor(day),
+                                        fontFamily: 'static',
+                                        fontWeight: FontWeight.w400,
                                         fontSize: 20.0,
                                       ),
                                     ),
@@ -437,6 +464,8 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                                       '${day.day}',  // 숫자만 표시
                                       style: TextStyle(
                                         color: Colors.white,
+                                        fontFamily: 'static',
+                                        fontWeight: FontWeight.w400,
                                         fontSize: 20.0,
                                       ),
                                     ),
@@ -489,6 +518,8 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                               text,
                               style: TextStyle(
                                 color: _getDowTextColor(text),
+                                fontFamily: 'static',
+                                fontWeight: FontWeight.w400,
                                 fontSize: 20.0,
                               ),
                             ),

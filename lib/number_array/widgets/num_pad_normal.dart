@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dyscalculia_app/number_array/screens/quiz_page.dart';
-
 // KeyPad widget
 // This widget is reusable and its buttons are customizable (color, size)
 class NumPadNormal extends StatelessWidget {

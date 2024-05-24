@@ -46,6 +46,7 @@ class MyProgressIndicator extends StatelessWidget {
                   text: label,
                   textStyle: TextStyle(
                     fontFamily: 'static',
+                    fontWeight: FontWeight.w700,
                     color: Colors.white,
                     fontSize: 25.0,
                   ),
@@ -60,6 +61,7 @@ class MyProgressIndicator extends StatelessWidget {
                   textStyle: TextStyle(
                     fontFamily: 'static',
                     color: Colors.white,
+                    fontWeight: FontWeight.w700,
                     fontSize: 25.0,
                   ),
                   borderColor: color,

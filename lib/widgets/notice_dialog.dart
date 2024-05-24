@@ -25,7 +25,6 @@ class NoticeDialog extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -40,23 +39,23 @@ class NoticeDialog extends StatelessWidget {
                     ),
                   ),
                   Divider(height: 0, color: Colors.green, thickness: 2.0,),
-                  Expanded(
-                    child: SizedBox(),
-                    flex: 2,
-                  ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      notice,
-                      style: TextStyle(
-                        fontFamily: 'static',
-                        fontSize: 40.0,
-                      ),
-                    ),
+                    child: SizedBox(),
                   ),
                   Expanded(
-                    child: SizedBox(),
-                    flex: 3,
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          notice,
+                          style: TextStyle(
+                            fontFamily: 'static',
+                            fontSize: 35.0,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),

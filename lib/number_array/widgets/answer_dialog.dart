@@ -1,36 +1,18 @@
 import 'package:flutter/material.dart';
 
 class MYAnswerDialog extends StatelessWidget {
-  final Color backgroundColor;
-  final double borderRadius;
   final String contentText;
-  final double underlineGap;
   final Color contentTextColor;
-  final double contentFontSize;
-  final Color underlineColor;
-  final double underlineThickness;
   final String actionText;
-  final Color actionButtonColor;
-  final Color actionTextColor;
-  final double actionTextSize;
   final VoidCallback onActionPressed;
   final int correctAnswer;
 
 
    MYAnswerDialog({
     Key? key,
-    required this.backgroundColor,
-    this.borderRadius = 20.0,
     required this.contentText,
-    required this.underlineGap,
     required this.contentTextColor,
-    required this.contentFontSize,
-    required this.underlineColor,
-    required this.underlineThickness,
     required this.actionText,
-    required this.actionButtonColor,
-    required this.actionTextColor,
-    required this.actionTextSize,
     required this.onActionPressed,
     required String correctAnswerString,
   }) : correctAnswer = int.tryParse(correctAnswerString) ?? -1,
@@ -70,9 +52,9 @@ class MYAnswerDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: backgroundColor,
+      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: BorderRadius.circular(50.0),
       ),
       surfaceTintColor: Colors.transparent,
       elevation: 10.0,
@@ -129,35 +111,35 @@ class MYAnswerDialog extends StatelessWidget {
                     fontFamily: 'static',
                     fontWeight: FontWeight.w900,
                     color: contentTextColor,
-                    fontSize: contentFontSize,
+                    fontSize: 60.0,
                   ),
                 ),
                 Positioned(
-                  bottom: underlineGap,
+                  bottom: -15,
                   child: Text(
                     contentText,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.transparent,
                       fontFamily: 'text',
-                      fontSize: contentFontSize,
+                      fontSize: 60.0,
                       decoration: TextDecoration.underline,
-                      decorationColor: underlineColor,
+                      decorationColor: contentTextColor,
                       decorationStyle: TextDecorationStyle.wavy,
-                      decorationThickness: underlineThickness,
+                      decorationThickness: 5.0,
                     ),
                   ),
                 ),
                 if (actionText != '다시 풀기')
                 Positioned(
-                  bottom: underlineGap + 10,
+                  bottom: -5,
                   child: Text(
                     '$correctAnswer의 위치는',
                     style: TextStyle(
                       fontFamily: 'static',
                       color: contentTextColor,
                       fontWeight: FontWeight.w700,
-                      fontSize: contentFontSize - 20,
+                      fontSize: 40,
                     ),
                   ),
                 ),
@@ -176,13 +158,13 @@ class MYAnswerDialog extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: onActionPressed,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: actionButtonColor,
-                        foregroundColor: actionTextColor,
+                        backgroundColor: Colors.green,
+                        foregroundColor: Colors.white,
                         surfaceTintColor: Colors.transparent,
                         shadowColor: Colors.black,
                         elevation: 5,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(borderRadius),
+                          borderRadius: BorderRadius.circular(50.0),
                         ),
                         padding: EdgeInsets.symmetric(vertical: 20.0),
                       ),
@@ -190,9 +172,9 @@ class MYAnswerDialog extends StatelessWidget {
                         actionText,
                         style: TextStyle(
                           fontFamily: 'static',
-                          color: actionTextColor,
+                          color: Colors.white,
                           fontWeight: FontWeight.w700,
-                          fontSize: actionTextSize,
+                          fontSize: 40.0,
                         ),
                       ),
                     ),

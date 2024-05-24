@@ -69,7 +69,7 @@ class _FinishScreenState extends State<FinishScreen> {
                 ),
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.8,
-                  height: MediaQuery.of(context).size.height * 0.65,
+                  height: MediaQuery.of(context).size.height * 0.7,
                   child: Padding(
                     padding: const EdgeInsets.all(30.0), // 다이얼로그 패딩 추가
                     child: Column(

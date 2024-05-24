@@ -99,7 +99,7 @@ class _SetTotalProblemsState extends State<SetTotalProblems_ruler> {
               child: NumPadNormal(
                 buttonSize: 110,
                 buttonColor: Colors.green,
-                iconColor: Colors.cyan.shade500,
+                iconColor: Colors.blue,
                 controller: _myController,
                 left: () {
                   _myController.text = 10.toString();

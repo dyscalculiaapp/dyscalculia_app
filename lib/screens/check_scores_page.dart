@@ -57,7 +57,11 @@ class CheckScores extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 date,
-                                style: TextStyle(fontFamily: 'static', fontSize: 24, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                  fontFamily: 'static',
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ),
                             generateProgressIndicator(context, 'correctProblemArrayCount', date, '수 위치 찾기', Colors.orangeAccent, goalArray),

@@ -8,10 +8,9 @@ import 'package:dyscalculia_app/number_array/widgets/num_pad.dart';
 import 'package:dyscalculia_app/number_array/widgets/answer_dialog.dart';
 import 'package:dyscalculia_app/number_array/logic/quiz_maker.dart';
 import 'package:dyscalculia_app/number_array/screens/finish_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 QuizMain quizMain = QuizMain();
-NumPad numPad = NumPad(controller: TextEditingController());
-//FlutterTts flutterTts = FlutterTts();
 
 class RunQuiz extends StatefulWidget {
   final int totalProblems;
@@ -25,10 +24,15 @@ class RunQuiz extends StatefulWidget {
 
 class _RunQuizState extends State<RunQuiz> {
   var _totalProblem = 0;
+  var _chance;
+  var _solvedProblem = 0; //푼 문제 개수
+  var _correctProblem = 0; //맞힌 문제 개수
+  var _score = 0.0; //맞힌 문제에 따른 점수
+  var _attempt = 0; // 현재 시도 횟수
+
   final FlutterTts flutterTts = FlutterTts();
   final TextEditingController _myController = TextEditingController();
   final GlobalKey<NumPadState> _numPadKey = GlobalKey<NumPadState>();
-
 
   @override
   void initState() {
@@ -44,14 +48,16 @@ class _RunQuizState extends State<RunQuiz> {
     flutterTts.setSpeechRate(0.5);
     // 볼륨 설정 0.0-1.0
     flutterTts.setVolume(1.0);
+    _loadChance();
   }
 
-  //총 문제 개수
-  var _solvedProblem = 0; //푼 문제 개수
-  var _correctProblem = 0; //맞힌 문제 개수
-  var _score = 0.0; //맞힌 문제에 따른 점수
-  var _attempt = 0; // 현재 시도 횟수
-  var _chance = 3;
+  Future<void> _loadChance() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var chance = prefs.getInt('chance') ?? 3;
+    setState(() {
+      _chance = chance;
+    });
+  }
 
   void _check(var Answer) {
     var correctAnswer = int.parse(quizMain.answer());
@@ -70,18 +76,9 @@ class _RunQuizState extends State<RunQuiz> {
             barrierDismissible: false,
             builder: (BuildContext context) {
               return MYAnswerDialog(
-                backgroundColor: Colors.white,
-                borderRadius: 50.0,
                 contentText: "맞았습니다!\n",
-                underlineGap: -15,
                 contentTextColor: Colors.cyan.shade500,
-                contentFontSize: 60.0,
-                underlineColor: Colors.cyan.shade500,
-                underlineThickness: 5.0,
                 actionText: '결과 보기',
-                actionButtonColor: Colors.green,
-                actionTextColor: Colors.white,
-                actionTextSize: 40.0,
                 correctAnswerString : quizMain.answer(),
                 onActionPressed: () {
                   setState(() => quizMain.next());
@@ -116,18 +113,9 @@ class _RunQuizState extends State<RunQuiz> {
             barrierDismissible: false,
             builder: (BuildContext context) {
               return MYAnswerDialog(
-                backgroundColor: Colors.white,
-                borderRadius: 50.0,
                 contentText: "맞았습니다!\n",
-                underlineGap: -15,
                 contentTextColor: Colors.cyan.shade500,
-                contentFontSize: 60.0,
-                underlineColor: Colors.cyan.shade500,
-                underlineThickness: 5.0,
                 actionText: '다음 문제',
-                actionButtonColor: Colors.green,
-                actionTextColor: Colors.white,
-                actionTextSize: 40.0,
                 onActionPressed: () {
                   setState(() => quizMain.next());
                   Navigator.of(context).pop();
@@ -147,18 +135,9 @@ class _RunQuizState extends State<RunQuiz> {
               barrierColor: Colors.green,
               builder: (BuildContext context) {
                 return MYAnswerDialog(
-                  backgroundColor: Colors.white,
-                  borderRadius: 50.0,
                   contentText: "\n틀렸습니다!\n",
-                  underlineGap: -15,
                   contentTextColor: Colors.red.shade400,
-                  contentFontSize: 60.0,
-                  underlineColor: Colors.red.shade400,
-                  underlineThickness: 5.0,
                   actionText: '다시 풀기',
-                  actionButtonColor: Colors.green,
-                  actionTextColor: Colors.white,
-                  actionTextSize: 40.0,
                   onActionPressed: () {
                     Navigator.pop(context);
                     _numPadKey.currentState?.reset();
@@ -176,18 +155,9 @@ class _RunQuizState extends State<RunQuiz> {
               barrierDismissible: false,
               builder: (BuildContext context) {
                 return MYAnswerDialog(
-                  backgroundColor: Colors.white,
-                  borderRadius: 50.0,
                   contentText: "틀렸습니다!\n",
-                  underlineGap: -15,
                   contentTextColor: Colors.red.shade400,
-                  contentFontSize: 60.0,
-                  underlineColor: Colors.red.shade400,
-                  underlineThickness: 5.0,
                   actionText: '결과 보기',
-                  actionButtonColor: Colors.green,
-                  actionTextColor: Colors.white,
-                  actionTextSize: 40.0,
                   correctAnswerString : quizMain.answer(),
                   onActionPressed: () {
                     setState(() => quizMain.next());
@@ -219,18 +189,9 @@ class _RunQuizState extends State<RunQuiz> {
                 barrierColor: Colors.green,
                 builder: (BuildContext context) {
                   return MYAnswerDialog(
-                    backgroundColor: Colors.white,
-                    borderRadius: 50.0,
                     contentText: "틀렸습니다!\n",
-                    underlineGap: -15,
                     contentTextColor: Colors.red.shade400,
-                    contentFontSize: 60.0,
-                    underlineColor: Colors.red.shade400,
-                    underlineThickness: 5.0,
                     actionText: '다음 문제',
-                    actionButtonColor: Colors.green,
-                    actionTextColor: Colors.white,
-                    actionTextSize: 40.0,
                     onActionPressed: () {
                       setState(() => quizMain.next());
                       Navigator.pop(context);
@@ -448,7 +409,7 @@ class _RunQuizState extends State<RunQuiz> {
                     _myController.clear();
                     },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: Colors.orangeAccent,
                     //배경색
                     foregroundColor: Colors.white,
                     //글씨색

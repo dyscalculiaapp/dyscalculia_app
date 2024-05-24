@@ -220,7 +220,7 @@ class _MainScreenState extends State<MainScreen> {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    flex: 2,
+                    flex: 1,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
@@ -258,7 +258,7 @@ class _MainScreenState extends State<MainScreen> {
                     child: SizedBox(),
                   ),
                   Expanded(
-                    flex: 2,
+                    flex: 1,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
@@ -292,11 +292,15 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
             Expanded(
+              flex: 1,
+              child: SizedBox(),
+            ),
+            Expanded(
               flex: 4,
               child: Text(
                 'EWHA 24 Capstone Project\nin Content Convergence I',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontFamily: 'belgan', fontSize: 45.0, color: Colors.green.shade300),
+                style: TextStyle(fontFamily: 'deco', fontSize: 40.0, color: Colors.green.shade300),
               ),
             ),
           ],

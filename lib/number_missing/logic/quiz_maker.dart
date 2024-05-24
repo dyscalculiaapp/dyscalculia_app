@@ -9,7 +9,7 @@ class QuizMain {
   }
 
   void generateNewQuestion() {
-    int startMark = new Random().nextInt(10) * 10 + 1;  // 1 11 21 31 41 51 61 71 81중에 랜덤 숫자
+    int startMark = new Random().nextInt(91) + 1;  // 1 11 21 31 41 51 61 71 81중에 랜덤 숫자
     int index = new Random().nextInt(10);
 
     if (numList.isEmpty) {

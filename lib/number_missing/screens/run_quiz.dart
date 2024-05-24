@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:dyscalculia_app/number_missing/widgets/progress_indicator.dart';
 import 'package:dyscalculia_app/number_missing/widgets/chance_indicator.dart';
-import 'package:dyscalculia_app/number_missing/widgets/num_pad_normal.dart';
+import 'package:dyscalculia_app/number_missing/widgets/num_pad.dart';
 import 'package:dyscalculia_app/number_missing/widgets/answer_dialog.dart';
 import 'package:dyscalculia_app/number_missing/logic/quiz_maker.dart';
 import 'package:dyscalculia_app/number_missing/screens/finish_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 QuizMain quizMain = QuizMain();
 
@@ -23,37 +23,29 @@ class RunQuiz extends StatefulWidget {
 
 class _RunQuizState extends State<RunQuiz> {
   var _totalProblem = 0;
+  var _chance;
+  var _solvedProblem = 0; //푼 문제 개수
+  var _correctProblem = 0; //맞힌 문제 개수
+  var _score = 0.0; //맞힌 문제에 따른 점수
+  var _attempt = 0; // 현재 시도 횟수
+
   final TextEditingController _myController = TextEditingController();
-  int wrongCount = 0;
-  int lastGameWrongCount = 0;
 
 
   @override
   void initState() {
     super.initState();
     _totalProblem = widget.totalProblems;
-    loadWrongCount();
+    _loadChance();
   }
 
-  Future<void> loadWrongCount() async {
-    final prefs = await SharedPreferences.getInstance();
+  Future<void> _loadChance() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var chance = prefs.getInt('chance') ?? 3;
     setState(() {
-      lastGameWrongCount = prefs.getInt('wrongCount') ?? 0;
-      wrongCount = 0; // Reset wrong count for a new game
+      _chance = chance;
     });
   }
-
-  Future<void> saveWrongCount() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('wrongCount', wrongCount);
-  }
-
-  //총 문제 개수
-  var _solvedProblem = 0; //푼 문제 개수
-  var _correctProblem = 0; //맞힌 문제 개수
-  var _score = 0.0; //맞힌 문제에 따른 점수
-  var _attempt = 0; // 현재 시도 횟수
-  var _chance = 3;
 
   void _check(var Answer) {
     var correctAnswer = quizMain.answer();
@@ -72,20 +64,9 @@ class _RunQuizState extends State<RunQuiz> {
             barrierDismissible: false,
             builder: (BuildContext context) {
               return MYAnswerDialog(
-                backgroundColor: Colors.white,
-                borderRadius: 50.0,
-                shadowColor: Colors.blue,
-                contentText: "맞았습니다!\n",
-                font: 'text',
-                underlineGap: -15,
+                contentText: "\n맞았습니다!\n",
                 contentTextColor: Colors.cyan.shade500,
-                contentFontSize: 60.0,
-                underlineColor: Colors.cyan.shade500,
-                underlineThickness: 5.0,
                 actionText: '결과 보기',
-                actionButtonColor: Colors.green,
-                actionTextColor: Colors.white,
-                actionTextSize: 40.0,
                 correctAnswerString : quizMain.answer().toString(),
                 onActionPressed: () {
                   setState(() => quizMain.next());
@@ -122,20 +103,9 @@ class _RunQuizState extends State<RunQuiz> {
             barrierDismissible: false,
             builder: (BuildContext context) {
               return MYAnswerDialog(
-                backgroundColor: Colors.white,
-                borderRadius: 50.0,
-                shadowColor: Colors.blue,
-                contentText: "맞았습니다!\n",
-                font: 'text',
-                underlineGap: -15,
+                contentText: "\n맞았습니다!\n",
                 contentTextColor: Colors.cyan.shade500,
-                contentFontSize: 60.0,
-                underlineColor: Colors.cyan.shade500,
-                underlineThickness: 5.0,
                 actionText: '다음 문제',
-                actionButtonColor: Colors.green,
-                actionTextColor: Colors.white,
-                actionTextSize: 40.0,
                 onActionPressed: () {
                   setState(() => quizMain.next());
                   Navigator.of(context).pop();
@@ -156,20 +126,9 @@ class _RunQuizState extends State<RunQuiz> {
               barrierColor: Colors.green,
               builder: (BuildContext context) {
                 return MYAnswerDialog(
-                  backgroundColor: Colors.white,
-                  borderRadius: 50.0,
-                  shadowColor: Colors.blue,
                   contentText: "\n틀렸습니다!\n",
-                  font: 'text',
-                  underlineGap: -15,
                   contentTextColor: Colors.red.shade400,
-                  contentFontSize: 60.0,
-                  underlineColor: Colors.red.shade400,
-                  underlineThickness: 5.0,
                   actionText: '다시 풀기',
-                  actionButtonColor: Colors.green,
-                  actionTextColor: Colors.white,
-                  actionTextSize: 40.0,
                   onActionPressed: () {
                     Navigator.pop(context);
                     _myController.clear();
@@ -187,25 +146,13 @@ class _RunQuizState extends State<RunQuiz> {
               barrierDismissible: false,
               builder: (BuildContext context) {
                 return MYAnswerDialog(
-                  backgroundColor: Colors.white,
-                  borderRadius: 50.0,
-                  shadowColor: Colors.blue,
-                  contentText: "틀렸습니다!\n",
-                  font: 'text',
-                  underlineGap: -15,
+                  contentText: "\n틀렸습니다!\n",
                   contentTextColor: Colors.red.shade400,
-                  contentFontSize: 60.0,
-                  underlineColor: Colors.red.shade400,
-                  underlineThickness: 5.0,
                   actionText: '결과 보기',
-                  actionButtonColor: Colors.green,
-                  actionTextColor: Colors.white,
-                  actionTextSize: 40.0,
                   correctAnswerString : quizMain.answer().toString(),
                   onActionPressed: () {
                     setState(() => quizMain.next());
                     Navigator.of(context).pop();
-                    //_numPadKey.currentState?.reset();
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -233,27 +180,16 @@ class _RunQuizState extends State<RunQuiz> {
                 barrierColor: Colors.green,
                 builder: (BuildContext context) {
                   return MYAnswerDialog(
-                    backgroundColor: Colors.white,
-                    borderRadius: 50.0,
-                    shadowColor: Colors.blue,
-                    contentText: "틀렸습니다!\n",
-                    font: 'text',
-                    underlineGap: -15,
+                    contentText: "\n틀렸습니다!\n",
                     contentTextColor: Colors.red.shade400,
-                    contentFontSize: 60.0,
-                    underlineColor: Colors.red.shade400,
-                    underlineThickness: 5.0,
                     actionText: '다음 문제',
-                    actionButtonColor: Colors.green,
-                    actionTextColor: Colors.white,
-                    actionTextSize: 40.0,
                     onActionPressed: () {
                       setState(() => quizMain.next());
                       Navigator.pop(context);
                       _myController.clear();
                       _attempt = 0;
                     },
-                    correctAnswerString : quizMain.startMark().toString(),
+                    correctAnswerString : quizMain.answer().toString(),
                   );
                 }
             );
@@ -269,9 +205,8 @@ class _RunQuizState extends State<RunQuiz> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        Expanded(
-          flex: 2,
-          child: SizedBox(),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
         ),
         Padding(
           padding: EdgeInsets.all(20),
@@ -282,84 +217,80 @@ class _RunQuizState extends State<RunQuiz> {
             color: Colors.green, // 진행 표시기 색상
             backgroundColor: Colors.grey.shade300, // 배경 색상
             valueColor: Colors.green,
-          )
+          ),
         ),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            verticalDirection: VerticalDirection.down,
             children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 0.0),
+                child: IgnorePointer(
+                  child: TextButton(
+                    onPressed: () {
+                      // 아무 동작도 하지 않음
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      // 배경색
+                      foregroundColor: Colors.transparent,
+                      // 글씨색
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      // 버튼 내 여백
+                      // side: BorderSide(color: Colors.pink.shade200, width: 3.0,),
+                      // 테두리선
+                      // shape: RoundedRectangleBorder(
+                      //   borderRadius: BorderRadius.circular(20),
+                      // ),
+                    ),
+                    child: Text(
+                      '발음듣기',
+                      style: TextStyle(
+                        fontFamily: 'static',
+                        fontWeight: FontWeight.w700,
+                        color: Colors.transparent,
+                        fontSize: 33.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(0),
+                child :MYChanceIndicator(
+                  totalChances: _chance,
+                  usedChances: _attempt,
+                  iconSize: 45.0,
+                  fillColor: Colors.red,
+                  emptyColor: Colors.grey,
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.fromLTRB(00.0, 00.0, 0.0, 0.0),
                 child: TextButton(
                   onPressed: () {
-                    //flutterTts.speak(quizMain.question());
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    //배경색
-                    foregroundColor: Colors.green,
-                    //글씨색
-                    shadowColor: Colors.blue,
-                    //그림자색
-                    padding: EdgeInsets.all(10.0),
-                    //버튼 내 여백
-                    //side: BorderSide(color: Colors.pink.shade200, width: 3.0,),
-                    //테두리선
-                    //shape: RoundedRectangleBorder(
-                    //  borderRadius: BorderRadius.circular(20),
-                    //),
-                  ),
-                  child: Text(
-                      '발음듣기',
-                      style: TextStyle(
-                        fontFamily: 'static',
-                        color: Colors.transparent,
-                        fontSize: 30.0,
-                      )
-                  ),
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.all(0),
-                  child :MYChanceIndicator(
-                    totalChances: _chance,
-                    usedChances: _attempt,
-                    iconSize: 40.0,
-                    fillColor: Colors.red,
-                    emptyColor: Colors.grey,
-                  )
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(00.0, 00.0, 0.0, 0.0),
-                child: TextButton(
-                  onPressed: () /*{
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                          return MainScreen();
-                        }));
-                  },*/
-                  {quizMain.next();
+                    quizMain.next();
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) {
-                              return FinishScreen(
-                                solevdProblem: _solvedProblem,
-                                totalProblem: _totalProblem,
-                                score: _score,
-                                correctProblem: _correctProblem,
-                              );
-                            }
-                        )
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return FinishScreen(
+                          solevdProblem: _solvedProblem,
+                          totalProblem: _totalProblem,
+                          score: _score,
+                          correctProblem: _correctProblem,
+                        );
+                      },),
                     );
                   },
-                  style: ElevatedButton.styleFrom(
+                  style: TextButton.styleFrom(
                     backgroundColor: Colors.white,
                     //배경색
                     foregroundColor: Colors.green,
                     //글씨색
-                    shadowColor: Colors.blue,
-                    //그림자색
-                    padding: EdgeInsets.all(10.0),
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
                     //버튼 내 여백
                     //side: BorderSide(color: Colors.pink.shade200, width: 3.0,),
                     //테두리선
@@ -368,16 +299,19 @@ class _RunQuizState extends State<RunQuiz> {
                     //),
                   ),
                   child: Text(
-                      '종료하기',
-                      style: TextStyle(
-                        fontFamily: 'static',
-                        color: Colors.green,
-                        fontSize: 30.0,
-                      )
+                    '종료하기',
+                    style: TextStyle(
+                      fontFamily: 'static',
+                      fontWeight: FontWeight.w700,
+                      color: Colors.green,
+                      fontSize: 33.0,
+                    ),
                   ),
                 ),
               ),
-            ]),
+            ],
+          ),
+        ),
         Expanded(
           flex: 3,
           child: SizedBox(),
@@ -409,12 +343,29 @@ class _RunQuizState extends State<RunQuiz> {
                     fillColor: Colors.green,
                     border: InputBorder.none,
                     hintText: '?',
-                    hintStyle: TextStyle(fontFamily: 'static', fontSize: 30, color: Colors.white),
+                    hintStyle: TextStyle(
+                      fontFamily: 'static',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 30,
+                      color: Colors.white,
+                    ),
                   ),
                   keyboardType: TextInputType.number,
-                  style: TextStyle(fontFamily: 'static', fontSize: 30, color: Colors.white),
+                  style: TextStyle(
+                    fontFamily: 'static',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 30,
+                    color: Colors.white,
+                  ),
                 ) :
-                Text(quizMain.numbers()[index].toString(), style: TextStyle(fontFamily: 'static', fontSize: 30)),
+                Text(
+                  quizMain.numbers()[index].toString(),
+                  style: TextStyle(
+                    fontFamily: 'static',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 30,
+                  ),
+                ),
               );
             },
             shrinkWrap: true, // 그리드 뷰가 차지하는 공간을 내용물에 맞춤
@@ -422,44 +373,44 @@ class _RunQuizState extends State<RunQuiz> {
           ),
         ),
         Expanded(
-          flex: 4,
+          flex: 2,
           child: SizedBox(),
         ),
-        NumPadNormal(
-          buttonSize: 100,
-          fontSizeL: 50,
-          fontSizeR: 70,
-          buttonColor: Colors.green,
-          iconColor: Colors.red.shade500,
-          controller: _myController,
-          left: () {
-            if (_myController.text.isNotEmpty) {
-              _myController.text = _myController.text.substring(0, _myController.text.length - 1);
-            }
-          },
-          right: () {
-            if (_myController.text.isNotEmpty) {
-              _myController.clear();
-            }
-          },
-          buttonText: '×',
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 0.0),
+          child: NumPad(
+            buttonSize: 110,
+            buttonColor: Colors.green,
+            iconColor: Colors.pinkAccent,
+            controller: _myController,
+            left: () {
+              if (_myController.text.isNotEmpty) {
+                _myController.clear();
+              }
+            },
+            right: () {
+              if (_myController.text.isNotEmpty) {
+                _myController.text = _myController.text.substring(0, _myController.text.length - 1);
+              }
+            },
+          ),
         ),
         Expanded(
           flex: 2,
           child: SizedBox(),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 60.0), // 외부 패딩 지정
+          padding: EdgeInsets.symmetric(horizontal: 80.0), // 외부 패딩 지정
           child: Row(
             children: <Widget>[
               Expanded(
                 child: ElevatedButton( //Submit
                   onPressed: () {
                     _check(_myController.text);
-                    //_myController.clear();
-                    },
+                    _myController.clear();
+                  },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: Colors.pinkAccent,
                     //배경색
                     foregroundColor: Colors.white,
                     //글씨색
@@ -469,18 +420,16 @@ class _RunQuizState extends State<RunQuiz> {
                     //그림자 깊이
                     surfaceTintColor : Colors.transparent,
 
-                    padding: EdgeInsets.all(20.0),
+                    padding: EdgeInsets.symmetric(horizontal: 0, vertical: 25),
                     //버튼 내 여백
                     //side: BorderSide(color: Colors.pink.shade200, width: 3.0,),
-                    //테두리선
-                    /*shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    ),*/
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   ),
                   child: Text(
-                      '답 확인하기',
+                      '제출하기',
                       style: TextStyle(
                         fontFamily: 'static',
+                        fontWeight: FontWeight.w700,
                         color: Colors.white,
                         fontSize: 40,
                       )

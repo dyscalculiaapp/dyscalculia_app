@@ -80,11 +80,6 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: text
-      fonts:
-        - asset: assets/fonts/nexon/NEXONLv1GothicRegular.ttf
-        - asset: assets/fonts/nexon/NEXONLv1GothicLight.ttf
-        - asset: assets/fonts/nexon/NEXONLv1GothicBold.ttf
     - family: static
       fonts:
         - asset: assets/fonts/static/NotoSansKR-Thin.ttf
@@ -105,34 +100,9 @@ flutter:
           weight: 800
         - asset: assets/fonts/static/NotoSansKR-Black.ttf
           weight: 900
-    - family: nanum
+    - family: deco
       fonts:
-        - asset: assets/fonts/nanum/NanumGothicBold.ttf
-        - asset: assets/fonts/nanum/NanumGothicExtraBold.ttf
-        - asset: assets/fonts/nanum/NanumGothic.ttf
-        - asset: assets/fonts/nanum/NanumGothicLight.ttf
-    - family: number
-      fonts:
-        - asset: assets/fonts/number/aCubeG.ttf
-    - family: nexon
-      fonts:
-        - asset: assets/fonts/nexon/NEXONLv1GothicRegular.ttf
-        - asset: assets/fonts/nexon/NEXONLv1GothicLight.ttf
-        - asset: assets/fonts/nexon/NEXONLv1GothicBold.ttf
-    - family: deco1
-      fonts:
-        - asset: assets/fonts/deco1/Amira.ttf
-    - family: josefine
-      fonts:
-        - asset: assets/fonts/josefine/NT Josefine.otf
-    - family: belgan
-      fonts:
-        - asset: assets/fonts/belgan/Belgan Aesthetic.ttf
-    - family: romantics
-      fonts:
-        - asset: assets/fonts/romantics/ROMANTIC.TTF
-
-
+        - asset: assets/fonts/deco/FrederickatheGreat-Regular.ttf
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

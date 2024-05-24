@@ -44,6 +44,7 @@ class MyProgressIndicator extends StatelessWidget {
                   text: '푼 문제 ${solvedProblem}',
                   textStyle: TextStyle(
                     fontFamily: 'static',
+                    fontWeight: FontWeight.w700,
                     color: Colors.white,
                     fontSize: 25.0,
                   ),
@@ -57,6 +58,7 @@ class MyProgressIndicator extends StatelessWidget {
                   text: '남은 문제 ${totalProblem - solvedProblem}',
                   textStyle: TextStyle(
                     fontFamily: 'static',
+                    fontWeight: FontWeight.w700,
                     color: Colors.white,
                     fontSize: 25.0,
                   ),
@@ -71,4 +73,5 @@ class MyProgressIndicator extends StatelessWidget {
     );
   }
 }
+
 
