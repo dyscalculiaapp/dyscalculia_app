@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:dyscalculia_app/number_ruler_scales/screens/quiz_page.dart';
 // KeyPad widget
 // This widget is reusable and its buttons are customizable (color, size)
 class NumPad extends StatelessWidget {
