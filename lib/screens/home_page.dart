@@ -50,7 +50,7 @@ class _MainScreenState extends State<MainScreen> {
                 padding: EdgeInsets.all(10.r),
                 child: Center(
                   child: Text(
-                    '수 감각 향상',
+                    '수 감각 훈련',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'static',
