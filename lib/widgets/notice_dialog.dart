@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class NoticeDialog extends StatelessWidget {
@@ -14,8 +15,8 @@ class NoticeDialog extends StatelessWidget {
       elevation: 10.0,
       shadowColor: Colors.black,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(60.0),
-        side: BorderSide(color: Colors.green, width: 2.0), // 다이얼로그 테두리 색
+        borderRadius: BorderRadius.circular(40.r),
+        side: BorderSide(color: Colors.green, width: 2.r), // 다이얼로그 테두리 색
       ),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.8,
@@ -23,16 +24,16 @@ class NoticeDialog extends StatelessWidget {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: EdgeInsets.all(15.r),
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: EdgeInsets.all(15.r),
                     child: Text(
                       '안내장',
                       style: TextStyle(
                         fontFamily: 'static',
-                        fontSize: 40.0,
+                        fontSize: 30.sp,
                         fontWeight: FontWeight.w700,
                         color: Colors.green,
                       ),
@@ -40,18 +41,18 @@ class NoticeDialog extends StatelessWidget {
                   ),
                   Divider(height: 0, color: Colors.green, thickness: 2.0,),
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: EdgeInsets.all(10.r),
                     child: SizedBox(),
                   ),
                   Expanded(
                     child: SingleChildScrollView(
                       child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: EdgeInsets.all(10.r),
                         child: Text(
                           notice,
                           style: TextStyle(
                             fontFamily: 'static',
-                            fontSize: 35.0,
+                            fontSize: 25.sp,
                           ),
                         ),
                       ),
@@ -61,14 +62,14 @@ class NoticeDialog extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 20.0,
-              right: 20.0,
+              top: 15.r,
+              right: 15.r,
               child: IconButton(
                 icon: Icon(
                   MdiIcons.closeThick,
                 ),
                 color: Colors.green,
-                iconSize: 40.0,
+                iconSize: 30.r,
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

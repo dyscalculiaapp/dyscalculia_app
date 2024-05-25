@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dyscalculia_app/number_missing/widgets/borderd_text.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyProgressIndicator extends StatelessWidget {
   final int totalProblem;
@@ -39,31 +40,31 @@ class MyProgressIndicator extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 20.0),
+                padding: EdgeInsets.only(left: 20.w),
                 child: BorderedText(
                   text: '푼 문제 ${solvedProblem}',
                   textStyle: TextStyle(
                     fontFamily: 'static',
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
-                    fontSize: 25.0,
+                    fontSize: 18.sp,
                   ),
                   borderColor: valueColor,
-                  strokeWidth: 5.0,
+                  strokeWidth: 5.r,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 20.0),
+                padding: EdgeInsets.only(right: 20.w),
                 child: BorderedText(
                   text: '남은 문제 ${totalProblem - solvedProblem}',
                   textStyle: TextStyle(
                     fontFamily: 'static',
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
-                    fontSize: 25.0,
+                    fontSize: 18.sp,
                   ),
                   borderColor: valueColor,
-                  strokeWidth: 5.0,
+                  strokeWidth: 5.r,
                 ),
               ),
             ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-// KeyPad widget
-// This widget is reusable and its buttons are customizable (color, size)
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class NumPad extends StatelessWidget {
   final double buttonSize;
   final Color buttonColor;
@@ -24,7 +24,7 @@ class NumPad extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          const SizedBox(height: 20),
+          SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             // implement the number keys (from 0 to 9) with the NumberButton widget
@@ -50,7 +50,7 @@ class NumPad extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -74,7 +74,7 @@ class NumPad extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -98,7 +98,7 @@ class NumPad extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -108,12 +108,13 @@ class NumPad extends StatelessWidget {
                 height: buttonSize,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.all(0),
                     backgroundColor: iconColor,
                     foregroundColor: Colors.white,
                     surfaceTintColor: Colors.transparent,
                     shadowColor: Colors.black,
                     elevation: 5,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
                   ),
                   onPressed: () {
                     left();
@@ -121,7 +122,7 @@ class NumPad extends StatelessWidget {
                   child: Center(
                     child: Icon(
                       Icons.cancel_outlined,
-                      size: 50,
+                      size: 35.r,
                     ),
                   ),
                 ),
@@ -144,7 +145,7 @@ class NumPad extends StatelessWidget {
                     surfaceTintColor: Colors.transparent,
                     shadowColor: Colors.black,
                     elevation: 5,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
                   ),
                   onPressed: () {
                     right();
@@ -152,14 +153,14 @@ class NumPad extends StatelessWidget {
                   child: Center(
                     child: Icon(
                       Icons.backspace_outlined,
-                      size: 50,
+                      size: 35.r,
                     ),
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
 
         ],
       ),
@@ -196,7 +197,7 @@ class NumberButton extends StatelessWidget {
           surfaceTintColor: Colors.transparent,
           shadowColor: Colors.black,
           elevation: 5,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
         ),
         onPressed: () {
           controller.text += number.toString();
@@ -205,8 +206,10 @@ class NumberButton extends StatelessWidget {
           child: Text(
             number.toString(),
             style: TextStyle(
-                fontFamily: 'static',
-                fontWeight: FontWeight.w700, color: Colors.white, fontSize: 50),
+              fontFamily: 'static',
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+              fontSize: 40.sp,),
           ),
         ),
       ),

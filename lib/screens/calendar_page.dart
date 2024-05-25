@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dyscalculia_app/screens/home_page.dart';
@@ -152,32 +153,32 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                   elevation: 10.0,
                   shadowColor: Colors.green,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(60.0),
-                    side: BorderSide(color: Colors.green, width: 2.0), // 다이얼로그 테두리 색
+                    borderRadius: BorderRadius.circular(40.r),
+                    side: BorderSide(color: Colors.green, width: 2.r), // 다이얼로그 테두리 색
                   ),
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.8,
                     height: MediaQuery.of(context).size.height * 0.5,
                     child: Padding(
-                      padding: const EdgeInsets.all(30.0), // 다이얼로그 패딩 추가
+                      padding: EdgeInsets.all(30.r), // 다이얼로그 패딩 추가
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(20.0),
+                            padding: EdgeInsets.all(10.r),
                             child: Text(
                               '$dateString',
                               style: TextStyle(
                                 fontFamily: 'static',
                                 fontWeight: FontWeight.w500,
-                                fontSize: 30.0,
+                                fontSize: 25.sp,
                                 color: Colors.green,
                               ),
                             ),
                           ),
                           Divider(height: 0, color: Colors.green, thickness: 2.0,),
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 50.0),
+                            padding: EdgeInsets.symmetric(vertical: 30.h),
                             child: Column(
                               children: [
                                 _generateProgressIndicator(context, '수 위치 찾기', arrayCount, Colors.orangeAccent, goalArray),
@@ -195,7 +196,7 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                                   icon: Icon(
                                     Icons.arrow_left_outlined,
                                     color: Colors.green,
-                                    size: 80,
+                                    size: 50.r,
                                   ),
                                   onPressed: () => _updateDayDetails(day.subtract(Duration(days: 1))),
                                 ),
@@ -205,7 +206,7 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                                     '닫기',
                                     style: TextStyle(
                                       fontFamily: 'static',
-                                      fontSize: 30.0,
+                                      fontSize: 25.sp,
                                       color: Colors.green,
                                     ),
                                   ),
@@ -214,7 +215,7 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                                   icon: Icon(
                                     Icons.arrow_right_outlined,
                                     color: Colors.green,
-                                    size: 80,
+                                    size: 50.r,
                                   ),
                                   onPressed: () => _updateDayDetails(day.add(Duration(days: 1))),
                                 ),
@@ -246,12 +247,12 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
 
   Widget _generateProgressIndicator(BuildContext context, String label, int correctProblem, Color color, int goal) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(vertical: 8.h),
       child: MyProgressIndicator(
         label: label,
         totalProblem: goal,
         correctProblem: correctProblem,
-        minHeight: 60.0,
+        minHeight: 50.h,
         color: color,
         backgroundColor: Colors.grey.shade300,
       ),
@@ -267,9 +268,6 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
-              ),
               Expanded(
                 child: FutureBuilder<List<int>>(
                   future: Future.wait([
@@ -299,8 +297,8 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                         });
                       },
                       eventLoader: _getEventsForDay,
-                      daysOfWeekHeight: 40,
-                      rowHeight: 150.0,
+                      daysOfWeekHeight: 30.h,
+                      rowHeight: 100.h,
                       headerStyle: HeaderStyle(
                         titleCentered: true,
                         titleTextFormatter: (date, locale) => DateFormat.yMMMM(locale).format(date),
@@ -308,17 +306,17 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                         titleTextStyle: TextStyle(
                           fontFamily: 'static',
                           fontWeight: FontWeight.w500,
-                          fontSize: 30.0,
+                          fontSize: 20.sp,
                           color: Colors.green,
                         ),
-                        headerPadding: EdgeInsets.symmetric(vertical: 10.0),
+                        headerPadding: EdgeInsets.symmetric(vertical: 10.h),
                         leftChevronIcon: Icon(
                           Icons.arrow_left,
-                          size: 40.0,
+                          size: 30.r,
                         ),
                         rightChevronIcon: Icon(
                           Icons.arrow_right,
-                          size: 40.0,
+                          size: 30.r,
                         ),
                       ),
                       daysOfWeekStyle: DaysOfWeekStyle(
@@ -326,13 +324,13 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                           color: Colors.black,
                           fontFamily: 'static',
                           fontWeight: FontWeight.w400,
-                          fontSize: 20.0,
+                          fontSize: 15.sp,
                         ),
                         weekendStyle: TextStyle(
                           color: Colors.red,
                           fontFamily: 'static',
                           fontWeight: FontWeight.w400,
-                          fontSize: 20.0,
+                          fontSize: 15.sp,
                         ),
                         dowTextFormatter: (date, locale) {
                           String weekday = DateFormat.E(locale).format(date);
@@ -344,24 +342,24 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                           color: Colors.black,
                           fontFamily: 'static',
                           fontWeight: FontWeight.w400,
-                          fontSize: 20.0,
+                          fontSize: 15.sp,
                         ),
                         weekendTextStyle: TextStyle(
                           color: Colors.red,
                           fontFamily: 'static',
                           fontWeight: FontWeight.w400,
-                          fontSize: 20.0,
+                          fontSize: 15.sp,
                         ),
                         outsideTextStyle: TextStyle(
                           color: Colors.grey,
                           fontFamily: 'static',
                           fontWeight: FontWeight.w400,
-                          fontSize: 20.0,
+                          fontSize: 15.sp,
                         ),
                         selectedDecoration: BoxDecoration(
                           color: Colors.transparent,
                           shape: BoxShape.circle,
-                          border: Border.all(color: Colors.green, width: 2.0), // 테두리만 있는 원
+                          border: Border.all(color: Colors.green, width: 1.r), // 테두리만 있는 원
                         ),
                         todayDecoration: BoxDecoration(
                           color: Colors.green,
@@ -386,13 +384,13 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                           return Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(top: 15.0),
+                                padding: EdgeInsets.only(top: 10.r),
                                 child: Text(
                                   '${day.day}',  // 숫자만 표시
                                   style: TextStyle(
                                     fontFamily: 'static',
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 20.0,
+                                    fontSize: 15.sp,
                                     color: _getTextColor(day),
                                   ),
                                 ),
@@ -404,13 +402,13 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                           return Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(top: 15.0),
+                                padding: EdgeInsets.only(top: 10.r),
                                 child: Text(
                                   '${day.day}',  // 숫자만 표시
                                   style: TextStyle(
                                     fontFamily: 'static',
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 20.0,
+                                    fontSize: 15.sp,
                                     color: _getTextColorOut(day),
                                   ),
                                 ),
@@ -422,15 +420,15 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                           return Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(top: 10.0),
+                                padding: EdgeInsets.only(top: 5.r),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: Colors.transparent,
                                     shape: BoxShape.circle,
-                                    border: Border.all(color: Colors.green, width: 2.0), // 테두리만 있는 원
+                                    border: Border.all(color: Colors.green, width: 2.r), // 테두리만 있는 원
                                   ),
-                                  width: 40,
-                                  height: 40,
+                                  width: 30.r,
+                                  height: 30.r,
                                   child: Center(
                                     child: Text(
                                       '${day.day}',  // 숫자만 표시
@@ -438,7 +436,7 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                                         color: _getTextColor(day),
                                         fontFamily: 'static',
                                         fontWeight: FontWeight.w400,
-                                        fontSize: 20.0,
+                                        fontSize: 15.sp,
                                       ),
                                     ),
                                   ),
@@ -451,14 +449,14 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                           return Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(top: 10.0),
+                                padding: EdgeInsets.only(top: 5.r),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: Colors.green,
                                     shape: BoxShape.circle,
                                   ),
-                                  width: 40,
-                                  height: 40,
+                                  width: 30.r,
+                                  height: 30.r,
                                   child: Center(
                                     child: Text(
                                       '${day.day}',  // 숫자만 표시
@@ -466,7 +464,7 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                                         color: Colors.white,
                                         fontFamily: 'static',
                                         fontWeight: FontWeight.w400,
-                                        fontSize: 20.0,
+                                        fontSize: 15.sp,
                                       ),
                                     ),
                                   ),
@@ -478,7 +476,7 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                         markerBuilder: (context, day, events) {
                           if (events.isNotEmpty) {
                             return Positioned(
-                              bottom: 10,
+                              bottom: 5,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: events.map((event) {
@@ -497,11 +495,11 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                                       markerColor = Colors.transparent;
                                   }
                                   return Container(
-                                    width: 40.0,
-                                    height: 10.0,
-                                    margin: EdgeInsets.symmetric(vertical: 2.0),
+                                    width: 35.w,
+                                    height: 8.h,
+                                    margin: EdgeInsets.symmetric(vertical: 2.h),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5.0),
+                                      borderRadius: BorderRadius.circular(4.r),
                                       color: markerColor,
                                     ),
                                   );
@@ -520,7 +518,7 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                                 color: _getDowTextColor(text),
                                 fontFamily: 'static',
                                 fontWeight: FontWeight.w400,
-                                fontSize: 20.0,
+                                fontSize: 15.sp,
                               ),
                             ),
                           );
@@ -530,18 +528,18 @@ class _TableCalendarScreenState extends State<TableCalendarScreen> {
                   },
                 ),
               ),
-              Divider(height: 0, color: Colors.grey, thickness: 2.0,),
+              Divider(height: 0, color: Colors.grey, thickness: 1.0,),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),
+                padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 5.h),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.home, size: 45),
+                      icon: Icon(Icons.home, size: 30.r),
                       onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen())),
                     ),
                     IconButton(
-                      icon: Icon(Icons.view_headline, size: 45),
+                      icon: Icon(Icons.view_headline, size: 30.r),
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => CheckScores()));
                       },

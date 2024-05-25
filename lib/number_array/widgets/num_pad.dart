@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NumPad extends StatefulWidget {
   final double buttonSize;
@@ -47,7 +48,7 @@ class NumPadState extends State<NumPad> {
   Widget build(BuildContext context) {
     {
       return Container(
-        margin: const EdgeInsets.only(left: 10, right: 10),
+        margin: EdgeInsets.symmetric(horizontal: 10.w),
         child: Column(
           children: [
             SizedBox(height: widget.paddingTB),
@@ -310,7 +311,7 @@ class _NumberButtonState extends State<NumberButton> {
             style: TextStyle(
               fontFamily: 'static',
               fontWeight: FontWeight.w800,
-              fontSize: 25,
+              fontSize: 18.sp,
             ),
           ),
         ),

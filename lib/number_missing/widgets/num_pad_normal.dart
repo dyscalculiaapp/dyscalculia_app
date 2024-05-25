@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dyscalculia_app/number_missing/screens/quiz_page.dart';
-// KeyPad widget
-// This widget is reusable and its buttons are customizable (color, size)
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class NumPadNormal extends StatelessWidget {
   final double buttonSize;
   final Color buttonColor;
@@ -25,7 +25,7 @@ class NumPadNormal extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          const SizedBox(height: 20),
+          SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             // implement the number keys (from 0 to 9) with the NumberButton widget
@@ -51,7 +51,7 @@ class NumPadNormal extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -75,7 +75,7 @@ class NumPadNormal extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -99,7 +99,7 @@ class NumPadNormal extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -109,20 +109,21 @@ class NumPadNormal extends StatelessWidget {
                 height: buttonSize,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.all(0),
                     backgroundColor: iconColor,
                     foregroundColor: Colors.white,
                     surfaceTintColor: Colors.transparent,
                     shadowColor: Colors.black,
                     elevation: 5,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
                   ),
                   onPressed: () {
-                    controller.text = left.toString();
+                    left();
                   },
                   child: Center(
                     child: Icon(
                       Icons.favorite_border_rounded,
-                      size: 50,
+                      size: 35.r,
                     ),
                   ),
                 ),
@@ -145,7 +146,7 @@ class NumPadNormal extends StatelessWidget {
                     surfaceTintColor: Colors.transparent,
                     shadowColor: Colors.black,
                     elevation: 5,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
                   ),
                   onPressed: () {
                     right();
@@ -153,16 +154,16 @@ class NumPadNormal extends StatelessWidget {
                   child: Center(
                     child: Icon(
                       Icons.backspace_outlined,
-                      size: 50,
+                      size: 35.r,
                     ),
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
+            padding: EdgeInsets.all(0),
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -173,7 +174,7 @@ class NumPadNormal extends StatelessWidget {
                         fontFamily: 'static',
                         color: Colors.white,
                         fontWeight: FontWeight.w700,
-                        fontSize: 40,
+                        fontSize: 30.sp,
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -182,8 +183,8 @@ class NumPadNormal extends StatelessWidget {
                       shadowColor: Colors.black,
                       elevation: 5,
                       surfaceTintColor: Colors.transparent,
-                      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 25),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                      padding: EdgeInsets.symmetric(vertical: 20.h),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
                     ),
                     onPressed: () {
                       int totalProblems = int.tryParse(controller.text) ?? 10;
@@ -238,7 +239,7 @@ class NumberButton extends StatelessWidget {
           surfaceTintColor: Colors.transparent,
           shadowColor: Colors.black,
           elevation: 5,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
         ),
         onPressed: () {
           controller.text += number.toString();
@@ -246,9 +247,12 @@ class NumberButton extends StatelessWidget {
         child: Center(
           child: Text(
             number.toString(),
-            style: const TextStyle(
-                fontFamily: 'static',
-                fontWeight: FontWeight.w700, color: Colors.white, fontSize: 50),
+            style: TextStyle(
+              fontFamily: 'static',
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+              fontSize: 40.sp,
+            ),
           ),
         ),
       ),

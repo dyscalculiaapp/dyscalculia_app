@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:dyscalculia_app/number_array/widgets/progress_indicator.dart';
 import 'package:dyscalculia_app/number_array/widgets/chance_indicator.dart';
 import 'package:dyscalculia_app/number_array/widgets/num_pad.dart';
@@ -215,28 +214,25 @@ class _RunQuizState extends State<RunQuiz> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20.0),
-        ),
-        Padding(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h,),
           child :MyProgressIndicator(
             totalProblem: _totalProblem,
             solvedProblem: _solvedProblem,
-            minHeight : 50.0,
+            minHeight : 40.h,
             color: Colors.green, // 진행 표시기 색상
             backgroundColor: Colors.grey.shade300, // 배경 색상
             valueColor: Colors.green,
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          padding: EdgeInsets.symmetric(horizontal: 15.w),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             verticalDirection: VerticalDirection.down,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 0.0),
+                padding: EdgeInsets.all(0),
                 child: TextButton(
                   onPressed: () {
                     flutterTts.speak(quizMain.question());
@@ -246,12 +242,12 @@ class _RunQuizState extends State<RunQuiz> {
                     //배경색
                     foregroundColor: Colors.green,
                     //글씨색
-                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
                     //버튼 내 여백
                     //side: BorderSide(color: Colors.pink.shade200, width: 3.0,),
                     //테두리선
                     //shape: RoundedRectangleBorder(
-                    //  borderRadius: BorderRadius.circular(20),
+                    //  borderRadius: BorderRadius.circular(15.r),
                     //),
                   ),
                   child: Text(
@@ -260,7 +256,7 @@ class _RunQuizState extends State<RunQuiz> {
                       fontFamily: 'static',
                       fontWeight: FontWeight.w700,
                       color: Colors.green,
-                      fontSize: 33.0,
+                      fontSize: 25.sp,
                     ),
                   ),
                 ),
@@ -270,13 +266,13 @@ class _RunQuizState extends State<RunQuiz> {
                 child :MYChanceIndicator(
                   totalChances: _chance,
                   usedChances: _attempt,
-                  iconSize: 45.0,
+                  iconSize: 33.r,
                   fillColor: Colors.red,
                   emptyColor: Colors.grey,
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(00.0, 00.0, 0.0, 0.0),
+                padding: EdgeInsets.all(0),
                 child: TextButton(
                   onPressed: () {
                     quizMain.next();
@@ -297,12 +293,12 @@ class _RunQuizState extends State<RunQuiz> {
                     //배경색
                     foregroundColor: Colors.green,
                     //글씨색
-                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
                     //버튼 내 여백
                     //side: BorderSide(color: Colors.pink.shade200, width: 3.0,),
                     //테두리선
                     //shape: RoundedRectangleBorder(
-                    //  borderRadius: BorderRadius.circular(20),
+                    //  borderRadius: BorderRadius.circular(15.r),
                     //),
                   ),
                   child: Text(
@@ -311,7 +307,7 @@ class _RunQuizState extends State<RunQuiz> {
                       fontFamily: 'static',
                       fontWeight: FontWeight.w700,
                       color: Colors.green,
-                      fontSize: 33.0,
+                      fontSize: 25.sp,
                     ),
                   ),
                 ),
@@ -320,11 +316,11 @@ class _RunQuizState extends State<RunQuiz> {
           ),
         ),
         Expanded(
-          flex: 3,
+          flex: 2,
           child: SizedBox(),
         ),
         Padding(
-          padding: EdgeInsets.all(00.0),
+          padding: EdgeInsets.all(0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -340,11 +336,11 @@ class _RunQuizState extends State<RunQuiz> {
                       fontFamily: 'static',
                       fontWeight: FontWeight.w700,
                       color: Colors.black,
-                      fontSize: 50.0,
+                      fontSize: 30.sp,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
                     child: Text(
                       quizMain.question(),
                       textAlign: TextAlign.center,
@@ -352,7 +348,7 @@ class _RunQuizState extends State<RunQuiz> {
                         fontFamily: 'static',
                         fontWeight: FontWeight.w700,
                         color: Colors.black,
-                        fontSize: 80.0,
+                        fontSize: 55.0,
                       ),
                     ),
                   ),
@@ -363,7 +359,7 @@ class _RunQuizState extends State<RunQuiz> {
                       fontFamily: 'static',
                       fontWeight: FontWeight.w700,
                       color: Colors.black,
-                      fontSize: 50.0,
+                      fontSize: 30.sp,
                     ),
                   ),
                 ],
@@ -375,21 +371,21 @@ class _RunQuizState extends State<RunQuiz> {
                   fontFamily: 'static',
                   fontWeight: FontWeight.w700,
                   color: Colors.black,
-                  fontSize: 33.0,
+                  fontSize: 25.sp,
                 ),
               ),
             ],
           ),
         ),
         Expanded(
-          flex: 3,
+          flex: 2,
           child: SizedBox(),
         ),
         NumPad(
           key: _numPadKey,
           buttonSize: MediaQuery.of(context).size.width * 0.09,
-          paddingTB : 20,
-          paddingElse : 5,
+          paddingTB : 20.h,
+          paddingElse : 5.h,
           buttonColor: Colors.green,
           numberColor: Colors.white,
           controller: _myController,
@@ -399,7 +395,7 @@ class _RunQuizState extends State<RunQuiz> {
           child: SizedBox(),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 80.0), // 외부 패딩 지정
+          padding: EdgeInsets.symmetric(horizontal: 55.w), // 외부 패딩 지정
           child: Row(
             children: <Widget>[
               Expanded(
@@ -419,10 +415,10 @@ class _RunQuizState extends State<RunQuiz> {
                     //그림자 깊이
                     surfaceTintColor : Colors.transparent,
 
-                    padding: EdgeInsets.symmetric(horizontal: 0, vertical: 25),
+                    padding: EdgeInsets.symmetric(vertical: 20.h),
                     //버튼 내 여백
                     //side: BorderSide(color: Colors.pink.shade200, width: 3.0,),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
                   ),
                   child: Text(
                       '제출하기',
@@ -430,7 +426,7 @@ class _RunQuizState extends State<RunQuiz> {
                         fontFamily: 'static',
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
-                        fontSize: 40,
+                        fontSize: 30.sp,
                       )
                   ),
                 ),

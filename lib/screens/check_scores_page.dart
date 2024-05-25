@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import 'package:dyscalculia_app/screens/home_page.dart';
@@ -26,80 +25,75 @@ class CheckScores extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white,
-        body: SafeArea( // SafeArea를 추가하여 상태 바 및 기타 시스템 UI 아래에 내용이 표시되지 않도록 함
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
-              ),
-              Expanded(
-                child: FutureBuilder(
-                  future: Future.wait([
-                    loadGoal('goalArray'),
-                    loadGoal('goalRuler'),
-                    loadGoal('goalMissing'),
-                  ]),
-                  builder: (context, AsyncSnapshot<List<int>> snapshot) {
-                    if (!snapshot.hasData) {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                    int goalArray = snapshot.data![0];
-                    int goalRuler = snapshot.data![1];
-                    int goalMissing = snapshot.data![2];
+        body: Column(
+          children: <Widget>[
+            Expanded(
+              child: FutureBuilder(
+                future: Future.wait([
+                  loadGoal('goalArray'),
+                  loadGoal('goalRuler'),
+                  loadGoal('goalMissing'),
+                ]),
+                builder: (context, AsyncSnapshot<List<int>> snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  int goalArray = snapshot.data![0];
+                  int goalRuler = snapshot.data![1];
+                  int goalMissing = snapshot.data![2];
 
-                    return ListView.builder(
-                      itemCount: dates.length,
-                      itemBuilder: (context, index) {
-                        String date = DateFormat('yyyy-MM-dd').format(dates[index]);
-                        return Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                date,
-                                style: TextStyle(
-                                  fontFamily: 'static',
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                  return ListView.builder(
+                    itemCount: dates.length,
+                    itemBuilder: (context, index) {
+                      String date = DateFormat('yyyy-MM-dd').format(dates[index]);
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(5.r),
+                            child: Text(
+                              date,
+                              style: TextStyle(
+                                fontFamily: 'static',
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
-                            generateProgressIndicator(context, 'correctProblemArrayCount', date, '수 위치 찾기', Colors.orangeAccent, goalArray),
-                            generateProgressIndicator(context, 'correctProblemRulerCount', date, '눈금 수 찾기', Colors.blue, goalRuler),
-                            generateProgressIndicator(context, 'correctProblemMissingCount', date, '사라진 수 찾기', Colors.pinkAccent, goalMissing),
-                            Divider(thickness: 2),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                ),
+                          ),
+                          generateProgressIndicator(context, 'correctProblemArrayCount', date, '수 위치 찾기', Colors.orangeAccent, goalArray),
+                          generateProgressIndicator(context, 'correctProblemRulerCount', date, '눈금 수 찾기', Colors.blue, goalRuler),
+                          generateProgressIndicator(context, 'correctProblemMissingCount', date, '사라진 수 찾기', Colors.pinkAccent, goalMissing),
+                          Divider(thickness: 2),
+                        ],
+                      );
+                    },
+                  );
+                },
               ),
-              Divider(height: 0, color: Colors.grey, thickness: 2.0,),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.home, size: 45),
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen())),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.date_range, size: 40),
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                              return TableCalendarScreen();
-                            })
-                        );
-                      },
-                    ),
-                  ],
-                ),
+            ),
+            Divider(height: 0, color: Colors.grey, thickness: 1.0,),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 5.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.home, size: 30.r),
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen())),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.date_range, size: 30.r),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return TableCalendarScreen();
+                          })
+                      );
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -107,7 +101,7 @@ class CheckScores extends StatelessWidget {
 
   Widget generateProgressIndicator(BuildContext context, String key, String date, String label, Color color, int goal) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal:20.0, vertical: 8.0),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
       child: FutureBuilder<int>(
         future: loadScore(key, date),
         builder: (context, snapshot) {
@@ -115,7 +109,7 @@ class CheckScores extends StatelessWidget {
             label: label,
             totalProblem: goal, // 사용자 목표를 totalProblem으로 설정
             correctProblem: snapshot.data ?? 0,
-            minHeight: 50.0,
+            minHeight: 40.h,
             color: color,
             backgroundColor: Colors.grey.shade300,
           );

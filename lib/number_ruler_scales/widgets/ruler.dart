@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math' as math;
 
 class RulerPainter extends CustomPainter {
@@ -29,7 +30,6 @@ class RulerPainter extends CustomPainter {
     final arrowX = markWidth * (selectedMark - startMark) + markWidth / 2;
     final arrowBodyStart = 0.0; // 화살표 몸통 시작 지점
     final arrowHeadLength = 20.0;
-    final arrowBodyEnd = baseMarkHeight + arrowHeadLength * math.sin(math.pi / 4); // 몸통 끝점 조정
 
     // 화살표 몸통
     canvas.drawLine(
@@ -83,7 +83,7 @@ class RulerPainter extends CustomPainter {
             color: Colors.black,
             fontFamily: 'static',
             fontWeight: FontWeight.w500,
-            fontSize: 25,),
+            fontSize: 18.sp,),
         );
         textPainter.layout();
         textPainter.paint(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dyscalculia_app/screens/home_page.dart';
 
@@ -14,9 +13,9 @@ class Setting extends StatelessWidget {
   Future<void> _loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String notice = prefs.getString('notice') ?? '';
-    int goalArray = prefs.getInt('goalArray') ?? 20;
-    int goalRuler = prefs.getInt('goalRuler') ?? 20;
-    int goalMissing = prefs.getInt('goalMissing') ?? 20;
+    int goalArray = prefs.getInt('goalArray') ?? 10;
+    int goalRuler = prefs.getInt('goalRuler') ?? 10;
+    int goalMissing = prefs.getInt('goalMissing') ?? 10;
     int chance = prefs.getInt('chance') ?? 3;
 
     noticeController.text = notice;
@@ -37,15 +36,14 @@ class Setting extends StatelessWidget {
           backgroundColor: Colors.white,
           surfaceTintColor: Colors.transparent,
           leading: IconButton(
-            iconSize: 40,
+            iconSize: 30.r,
             icon: Icon(
               Icons.arrow_back,
-              size: 40, // 아이콘 색상 설정
+              size: 30.r, // 아이콘 색상 설정
             ),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
             },
-            padding: EdgeInsets.all(10.0), // 터치 영역 설정
           ),
         ),
         backgroundColor: Colors.white,
@@ -53,9 +51,9 @@ class Setting extends StatelessWidget {
           child: SingleChildScrollView( // Scroll view to handle keyboard appearance
             child: Column(
               children: <Widget>[
-                SizedBox(height: 40),
+                SizedBox(height: 30.h),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 10.0),
+                  padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 10.h),
                   child: TextField(
                     controller: noticeController,
                     decoration: InputDecoration(
@@ -63,22 +61,22 @@ class Setting extends StatelessWidget {
                       labelStyle: TextStyle(
                         fontFamily: 'static',
                         fontWeight: FontWeight.w400,
-                        fontSize: 20.0,
+                        fontSize: 20.sp,
                       ),
                       border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                      contentPadding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 10.w),
                     ),
                     maxLines: 6,
                     style: TextStyle(
                       fontFamily: 'static',
                       fontWeight: FontWeight.w500,
-                      fontSize: 30.0,
+                      fontSize: 20.sp,
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 80.0), // 외부 패딩 지정
+                  padding: EdgeInsets.symmetric(horizontal: 60.w), // 외부 패딩 지정
                   child: Row(
                     children: <Widget>[
                       Expanded(
@@ -104,10 +102,10 @@ class Setting extends StatelessWidget {
                             //그림자 깊이
                             surfaceTintColor : Colors.transparent,
 
-                            padding: EdgeInsets.all(20.0),
+                            padding: EdgeInsets.all(15.r),
                             //버튼 내 여백
                             //side: BorderSide(color: Colors.pink.shade200, width: 3.0,),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
                           ),
                           child: Text(
                               '안내장 설정',
@@ -115,7 +113,7 @@ class Setting extends StatelessWidget {
                                 fontFamily: 'static',
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
-                                fontSize: 40,
+                                fontSize: 30.sp,
                               )
                           ),
                         ),
@@ -123,14 +121,14 @@ class Setting extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 20.h),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 10.0),
-                  child: Divider(height: 0, color: Colors.grey, thickness: 2.0,),
+                  padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 10.h),
+                  child: Divider(height: 0, color: Colors.grey, thickness: 2.0),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 20.h),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 10.0),
+                  padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 10.h),
                   child: Column(
                     children: <Widget>[
                       _buildGoalInputField(arrayController, '수 위치 찾기 목표 문제 수'),
@@ -140,7 +138,7 @@ class Setting extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 60, vertical: 00.0),
+                  padding: EdgeInsets.symmetric(horizontal: 40.w),
                   child: Text(
                     '목표 문제 수의 최소값은 1입니다',
                     textAlign: TextAlign.left,
@@ -148,12 +146,12 @@ class Setting extends StatelessWidget {
                       color: Colors.black,
                       fontFamily: 'static',
                       fontWeight: FontWeight.w400,
-                      fontSize: 25.0,
+                      fontSize: 18.sp,
                     ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 10), // 외부 패딩 지정
+                  padding: EdgeInsets.symmetric(horizontal: 60.w, vertical: 10.h), // 외부 패딩 지정
                   child: Row(
                     children: <Widget>[
                       Expanded(
@@ -192,10 +190,10 @@ class Setting extends StatelessWidget {
                             //그림자 깊이
                             surfaceTintColor : Colors.transparent,
 
-                            padding: EdgeInsets.all(20.0),
+                            padding: EdgeInsets.all(15.r),
                             //버튼 내 여백
                             //side: BorderSide(color: Colors.pink.shade200, width: 3.0,),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
                           ),
                           child: Text(
                               '목표 설정',
@@ -203,7 +201,7 @@ class Setting extends StatelessWidget {
                                 fontFamily: 'static',
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
-                                fontSize: 40,
+                                fontSize: 30.sp,
                               )
                           ),
                         ),
@@ -211,14 +209,14 @@ class Setting extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 20.h),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 10.0),
+                  padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 10.h),
                   child: Divider(height: 0, color: Colors.grey, thickness: 2.0,),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 20.h),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 20.0),
+                  padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 20.h),
                   child: TextField(
                     controller: chanceController,
                     keyboardType: TextInputType.number,
@@ -227,20 +225,20 @@ class Setting extends StatelessWidget {
                       labelStyle: TextStyle(
                         fontFamily: 'static',
                         fontWeight: FontWeight.w400,
-                        fontSize: 20.0,
+                        fontSize: 20.sp,
                       ),
                       border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                      contentPadding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 10.w),
                     ),
                     style: TextStyle(
                       fontFamily: 'static',
                       fontWeight: FontWeight.w500,
-                      fontSize: 30.0,
+                      fontSize: 30.sp,
                     ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 60, vertical: 00.0),
+                  padding: EdgeInsets.symmetric(horizontal: 60.w),
                   child: Text(
                     '기회의 최소값은 1, 최대값은 3입니다',
                     textAlign: TextAlign.left,
@@ -248,12 +246,12 @@ class Setting extends StatelessWidget {
                       color: Colors.black,
                       fontFamily: 'static',
                       fontWeight: FontWeight.w400,
-                      fontSize: 25.0,
+                      fontSize: 18.sp,
                     ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 10), // 외부 패딩 지정
+                  padding: EdgeInsets.symmetric(horizontal: 60.w, vertical: 10.h), // 외부 패딩 지정
                   child: Row(
                     children: <Widget>[
                       Expanded(
@@ -285,10 +283,10 @@ class Setting extends StatelessWidget {
                             //그림자 깊이
                             surfaceTintColor : Colors.transparent,
 
-                            padding: EdgeInsets.all(20.0),
+                            padding: EdgeInsets.all(15.r),
                             //버튼 내 여백
                             //side: BorderSide(color: Colors.pink.shade200, width: 3.0,),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
                           ),
                           child: Text(
                               '기회 설정',
@@ -296,7 +294,7 @@ class Setting extends StatelessWidget {
                                 fontFamily: 'static',
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
-                                fontSize: 40,
+                                fontSize: 30.sp,
                               )
                           ),
                         ),
@@ -304,6 +302,7 @@ class Setting extends StatelessWidget {
                     ],
                   ),
                 ),
+                SizedBox(height: 40.h),
               ],
             ),
           ),
@@ -314,7 +313,7 @@ class Setting extends StatelessWidget {
 
   Widget _buildGoalInputField(TextEditingController controller, String label) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: EdgeInsets.symmetric(vertical: 10.h),
       child: TextField(
         controller: controller,
         decoration: InputDecoration(
@@ -322,16 +321,16 @@ class Setting extends StatelessWidget {
           labelStyle: TextStyle(
             fontFamily: 'static',
             fontWeight: FontWeight.w400,
-            fontSize: 20.0,
+            fontSize: 20.sp,
           ),
           border: OutlineInputBorder(),
-          contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0), // 텍스트 필드 높이 조절
+          contentPadding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 10.w), // 텍스트 필드 높이 조절
         ),
         keyboardType: TextInputType.number,
         style: TextStyle(  // 텍스트 필드 내부 텍스트 스타일
           fontFamily: 'static',
           fontWeight: FontWeight.w500,
-          fontSize: 30.0,
+          fontSize: 30.sp,
         ),
       ),
     );

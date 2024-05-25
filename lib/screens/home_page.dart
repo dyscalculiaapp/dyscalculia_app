@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:dyscalculia_app/number_array/screens/set_total_problem_page.dart';
 import 'package:dyscalculia_app/number_ruler_scales/screens/set_total_problem_page.dart';
 import 'package:dyscalculia_app/number_missing/screens/set_total_problem_page.dart';
@@ -35,17 +33,21 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    return MaterialApp(
+    return
+      MaterialApp(
       debugShowCheckedModeBanner: false,  // 디버그 배너 제거
       home: Scaffold(
         backgroundColor: Colors.white,
         body: Column(
           children: <Widget>[
             Expanded(
-              flex: 8,
+              flex: 2,
+              child: SizedBox(),
+            ),
+            Expanded(
+              flex: 5,
               child: Padding(
-                padding: EdgeInsets.all(10.0),
+                padding: EdgeInsets.all(10.r),
                 child: Center(
                   child: Text(
                     '수 감각 향상',
@@ -53,14 +55,14 @@ class _MainScreenState extends State<MainScreen> {
                     style: TextStyle(
                       fontFamily: 'static',
                       fontWeight: FontWeight.w900,
-                      fontSize: 80.0,
+                      fontSize: 60.sp,
                     ),
                   ),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 10.0),
+              padding: EdgeInsets.symmetric(horizontal: 60.w, vertical: 10.h),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -72,8 +74,8 @@ class _MainScreenState extends State<MainScreen> {
                         shadowColor: Colors.black,
                         elevation: 5,
                         surfaceTintColor: Colors.transparent,
-                        padding: EdgeInsets.all(20.0),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        padding: EdgeInsets.all(15.r),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
                       ),
                       child: Text(
                         '수 위치 찾기',
@@ -81,7 +83,7 @@ class _MainScreenState extends State<MainScreen> {
                           color: Colors.white,
                           fontFamily: 'static',
                           fontWeight: FontWeight.w700,
-                          fontSize: 40.0,
+                          fontSize: 30.sp,
                         ),
                       ),
                       onPressed: () {
@@ -98,7 +100,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 10.0),
+              padding: EdgeInsets.symmetric(horizontal: 60.w, vertical: 10.h),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -110,8 +112,8 @@ class _MainScreenState extends State<MainScreen> {
                         shadowColor: Colors.black,
                         elevation: 5,
                         surfaceTintColor: Colors.transparent,
-                        padding: EdgeInsets.all(20.0),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        padding: EdgeInsets.all(15.r),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
                       ),
                       child: Text(
                         '눈금 수 찾기',
@@ -119,7 +121,7 @@ class _MainScreenState extends State<MainScreen> {
                           color: Colors.white,
                           fontFamily: 'static',
                           fontWeight: FontWeight.w700,
-                          fontSize: 40.0,
+                          fontSize: 30.sp,
                         ),
                       ),
                       onPressed: () {
@@ -136,7 +138,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 10.0),
+              padding: EdgeInsets.symmetric(horizontal: 60.w, vertical: 10.h),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -148,8 +150,8 @@ class _MainScreenState extends State<MainScreen> {
                         shadowColor: Colors.black,
                         elevation: 5,
                         surfaceTintColor: Colors.transparent,
-                        padding: EdgeInsets.all(20.0),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        padding: EdgeInsets.all(15.r),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
                       ),
                       child: Text(
                         '사라진 수 찾기',
@@ -157,7 +159,7 @@ class _MainScreenState extends State<MainScreen> {
                           color: Colors.white,
                           fontFamily: 'static',
                           fontWeight: FontWeight.w700,
-                          fontSize: 40.0,
+                          fontSize: 30.sp,
                         ),
                       ),
                       onPressed: () {
@@ -178,7 +180,7 @@ class _MainScreenState extends State<MainScreen> {
               child: SizedBox(),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 10.0),
+              padding: EdgeInsets.symmetric(horizontal: 60.w, vertical: 10.h),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -190,8 +192,8 @@ class _MainScreenState extends State<MainScreen> {
                         shadowColor: Colors.black,
                         elevation: 5,
                         surfaceTintColor: Colors.transparent,
-                        padding: EdgeInsets.all(20.0),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        padding: EdgeInsets.all(15.r),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
                       ),
                       child: Text(
                         '달성도 확인',
@@ -199,7 +201,7 @@ class _MainScreenState extends State<MainScreen> {
                           color: Colors.white,
                           fontFamily: 'static',
                           fontWeight: FontWeight.w700,
-                          fontSize: 40.0,
+                          fontSize: 30.sp,
                         ),
                       ),
                       onPressed: () {
@@ -216,7 +218,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 10.0),
+              padding: EdgeInsets.symmetric(horizontal: 60.w, vertical: 10.h),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -228,8 +230,8 @@ class _MainScreenState extends State<MainScreen> {
                         shadowColor: Colors.black,
                         elevation: 5,
                         surfaceTintColor: Colors.transparent,
-                        padding: EdgeInsets.all(20.0),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        padding: EdgeInsets.all(15.r),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
                       ),
                       child: Text(
                         '안내장',
@@ -237,7 +239,7 @@ class _MainScreenState extends State<MainScreen> {
                           color: Colors.white,
                           fontFamily: 'static',
                           fontWeight: FontWeight.w700,
-                          fontSize: 40.0,
+                          fontSize: 30.sp,
                         ),
                       ),
                       onPressed: () {
@@ -254,7 +256,7 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 00.0),
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
                     child: SizedBox(),
                   ),
                   Expanded(
@@ -266,8 +268,8 @@ class _MainScreenState extends State<MainScreen> {
                         shadowColor: Colors.black,
                         elevation: 5,
                         surfaceTintColor: Colors.transparent,
-                        padding: EdgeInsets.all(20.0),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        padding: EdgeInsets.all(15.r),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
                       ),
                       child: Text(
                         '설정',
@@ -275,7 +277,7 @@ class _MainScreenState extends State<MainScreen> {
                           color: Colors.white,
                           fontFamily: 'static',
                           fontWeight: FontWeight.w700,
-                          fontSize: 40.0,
+                          fontSize: 30.sp,
                         ),
                       ),
                       onPressed: () {
@@ -300,7 +302,7 @@ class _MainScreenState extends State<MainScreen> {
               child: Text(
                 'EWHA 24 Capstone Project\nin Content Convergence I',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontFamily: 'deco', fontSize: 40.0, color: Colors.green.shade300),
+                style: TextStyle(fontFamily: 'deco', fontSize: 30.sp, color: Colors.green.shade300),
               ),
             ),
           ],

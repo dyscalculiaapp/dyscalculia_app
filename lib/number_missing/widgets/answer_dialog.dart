@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MYAnswerDialog extends StatelessWidget {
   final String contentText;
@@ -23,7 +24,7 @@ class MYAnswerDialog extends StatelessWidget {
     return Dialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(40.r),
       ),
       surfaceTintColor: Colors.transparent,
       elevation: 10.0,
@@ -32,43 +33,7 @@ class MYAnswerDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min, // 다이얼로그 크기를 최소화
           children: [
-            // 타이틀
-            Container(
-              height: 60.0, // title의 높이
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Positioned(
-                    bottom: 40,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(8 * 2 - 1, (index) {
-                        if (index % 2 == 0) {
-                          return Container(
-                            width: 10.0,
-                            height: 100.0,
-                            color: Colors.green,
-                          );
-                        } else {
-                          return SizedBox(width: 40.0);
-                        }
-                      }),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(8 * 2 - 1, (index) {
-                      if (index % 2 == 0) {
-                        return Icon(Icons.circle, size: 40.0, color: Colors.green);
-                      } else {
-                        return SizedBox(width: 10.0);
-                      }
-                    }),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 30.0),
+            SizedBox(height: 40.h),
             Stack(
               alignment: Alignment.center,
               children: [
@@ -79,45 +44,45 @@ class MYAnswerDialog extends StatelessWidget {
                     fontFamily: 'static',
                     fontWeight: FontWeight.w900,
                     color: contentTextColor,
-                    fontSize: 60,
+                    fontSize: 50.sp,
                   ),
                 ),
                 Positioned(
-                  bottom: -15,
+                  bottom: -10.h,
                   child: Text(
                     contentText,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.transparent,
                       fontFamily: 'static',
-                      fontSize: 60.0,
+                      fontSize: 50.sp,
                       decoration: TextDecoration.underline,
                       decorationColor: contentTextColor,
                       decorationStyle: TextDecorationStyle.wavy,
-                      decorationThickness: 3.0,
+                      decorationThickness: 3.r,
                     ),
                   ),
                 ),
                 if (actionText != '다시 풀기')
                   Positioned(
-                    bottom: 0,
+                    bottom: 10.h,
                     child: Text(
                       '답은 $correctAnswer입니다',
                       style: TextStyle(
                         fontFamily: 'static',
                         color: contentTextColor,
                         fontWeight: FontWeight.w700,
-                        fontSize: 40,
+                        fontSize: 30.sp,
                       ),
                     ),
                   ),
               ],
             ),
             if (actionText != '다시 풀기')
-              SizedBox(height: 60.0),
-            SizedBox(height: 30.0),// 간격 조절
+              SizedBox(height: 40.h),
+            SizedBox(height: 30.h),// 간격 조절
             Padding(
-              padding: EdgeInsets.all(20.0), // 외부 패딩 지정
+              padding: EdgeInsets.all(15.r), // 외부 패딩 지정
               child:Row(
                 children: <Widget>[
                   Expanded(
@@ -130,9 +95,9 @@ class MYAnswerDialog extends StatelessWidget {
                         shadowColor: Colors.black,
                         elevation: 5,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.0),
+                          borderRadius: BorderRadius.circular(40.r),
                         ),
-                        padding: EdgeInsets.symmetric(vertical: 20.0),
+                        padding: EdgeInsets.symmetric(vertical: 15.h),
                       ),
                       child: Text(
                         actionText,
@@ -140,7 +105,7 @@ class MYAnswerDialog extends StatelessWidget {
                           fontFamily: 'static',
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
-                          fontSize: 40.0,
+                          fontSize: 30.sp,
                         ),
                       ),
                     ),
