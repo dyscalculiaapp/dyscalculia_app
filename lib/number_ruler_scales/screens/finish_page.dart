@@ -24,12 +24,13 @@ class FinishScreen extends StatefulWidget {
 
 class _FinishScreenState extends State<FinishScreen> {
   int correctProblemRulerCount = 0;
+  int correctProblemArrayCount = 0;
+  int correctProblemMissingCount = 0;
 
   @override
   void initState() {
     super.initState();
     loadAndUpdateCorrectProblemRulerCount();
-    
   }
 
   Future<void> loadAndUpdateCorrectProblemRulerCount() async {
@@ -42,7 +43,6 @@ class _FinishScreenState extends State<FinishScreen> {
     await prefs.setInt(todayKey, correctProblemRulerCount);
     print("Data saved for $todayKey: $correctProblemRulerCount"); // 디버깅용 출력
   }
-
   @override
   Widget build(BuildContext context) {
     double percentageScore = widget.score;

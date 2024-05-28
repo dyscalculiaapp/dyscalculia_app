@@ -1,3 +1,4 @@
+//달성도 확인 페이지에서 이용
 import 'package:flutter/material.dart';
 import 'package:dyscalculia_app/widgets/borderd_text.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

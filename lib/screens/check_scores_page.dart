@@ -1,3 +1,4 @@
+//달성도 확인 페이지 - 목록
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,6 +28,7 @@ class CheckScores extends StatelessWidget {
         backgroundColor: Colors.white,
         body: Column(
           children: <Widget>[
+            SizedBox(height: 30.0.h),
             Expanded(
               child: FutureBuilder(
                 future: Future.wait([

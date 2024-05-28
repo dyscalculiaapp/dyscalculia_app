@@ -213,6 +213,7 @@ class _RunQuizState extends State<RunQuiz> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
+        SizedBox(height: 30.0.h),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h,),
           child :MyProgressIndicator(

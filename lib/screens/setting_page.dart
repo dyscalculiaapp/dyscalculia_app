@@ -1,3 +1,4 @@
+//설정 페이지
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -140,7 +141,7 @@ class Setting extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 40.w),
                   child: Text(
-                    '목표 문제 수의 최소값은 1입니다',
+                    '목표 문제 수의 최솟값은 1입니다',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.black,
@@ -240,7 +241,7 @@ class Setting extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 60.w),
                   child: Text(
-                    '기회의 최소값은 1, 최대값은 3입니다',
+                    '기회의 최솟값은 1, 최댓값은 3입니다',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.black,
